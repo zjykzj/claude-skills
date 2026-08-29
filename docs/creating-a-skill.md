@@ -70,7 +70,7 @@ Reload behavior: `SKILL.md` changes hot-reload in-session; changes to `hooks/` o
 
 ## Evaluating and optimizing a skill
 
-Authoring is the start, not the end. The official `skill-creator` plugin (install: `/plugin install skill-creator@anthropics/claude-plugins-official`) defines the optimization methodology — evaluation-driven, in two lines:
+Authoring is the start, not the end. The official `skill-creator` plugin (install: `/plugin install skill-creator@anthropics/claude-plugins-official`) defines the optimization methodology — evaluation-driven, in two lines. For a deeper study guide on how the tool itself works (in Chinese), see [skill-creator.md](skill-creator.md):
 
 ### Line 1: description optimization (trigger accuracy)
 
