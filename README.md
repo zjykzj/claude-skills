@@ -13,17 +13,16 @@ claude-skills/
         ├── plugin.json           # Manifest (name = skill namespace prefix)
         ├── skills/               # Skills bundled in this plugin
         │   ├── spec/             #   SDD methodology + enforcement hook script
-        │   ├── dev/              #   test / lint / typecheck (Python)
         │   ├── commit/           #   commit format + CHANGELOG maintenance
         │   ├── release/          #   version bump + GitHub release
-        │   └── claude/           #   CLAUDE.md authoring guidelines
+        │   └── claude/           #   CLAUDE.md authoring, incl. development-command docs
         └── hooks/
             └── hooks.json        # PreToolUse hook: SDD reminder on specs/ edits
 ```
 
 ## Installation
 
-Plugin skills are namespaced by plugin name — `/maestro:spec`, `/maestro:dev`, etc.
+Plugin skills are namespaced by plugin name — `/maestro:spec`, `/maestro:commit`, etc.
 
 **One-time, per machine:**
 

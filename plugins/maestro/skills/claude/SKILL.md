@@ -38,6 +38,38 @@ Apply these principles when writing or modifying CLAUDE.md.
 - **Cross-references**: Critical Implementation Details link to related gotcha categories (`> **Related gotchas**: [Coordinate Systems](#coordinate-systems)`), and vice versa — bidirectional navigation.
 - **Content boundary table**: A table in "Specs vs CLAUDE.md" showing what belongs where — prevents scope creep in both directions.
 
+## Development Commands Section
+
+Every CLAUDE.md **must** include a self-contained "Development Commands" section — concrete, runnable commands, never references to external skills. This replaces generic skill guidance with project-specific facts.
+
+### Authoring Procedure
+
+1. **Detect the toolchain** from the project, not from assumptions:
+   - Python: `pyproject.toml`/`setup.py` present; lint stack via `grep -c "\[tool.ruff\]" pyproject.toml` (ruff stack) vs `black`+`isort`+`flake8` (legacy stack); type check via mypy (`[tool.mypy]` config)
+   - Other ecosystems: use their native tools (npm test, cargo test, go test, etc.) — do not invent Python equivalents
+2. **Check availability/config expectations** (`command -v <tool>`; which config file each tool reads — e.g. flake8 ignores pyproject.toml) and reflect any mismatch in the section (e.g. "flake8 defaults conflict with black — configure profile")
+3. **Write the section** as a command table plus a run-everything one-liner:
+
+```markdown
+## Development Commands
+
+| Command | What It Does |
+|---------|-------------|
+| `pytest` | Run full test suite |
+| `pytest -x -q` | Stop on first failure, quiet |
+| `ruff check <src dirs>` | Lint |
+| `ruff format --check <src dirs>` | Format check |
+| `mypy <package>` | Type check |
+
+Run all three: `pytest -q && ruff check <src dirs> && mypy <package>`
+
+### Installation
+pip install -e .[dev]                 # With test/lint deps
+```
+
+4. **Keep it factual**: commands that exist and pass today, not aspirational ones. Missing tool → note the install command, don't skip silently.
+5. **No skill indirection**: the section stands alone — a developer without any skills installed can run the project's checks from this section alone.
+
 ## Known Gotchas Writing Guidelines
 
 ### Organization: Categorize, Then Prioritize

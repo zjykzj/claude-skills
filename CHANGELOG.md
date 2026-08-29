@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **`dev` skill removed from the plugin** (breaking): the generic Python toolchain guidance now lives in the `/maestro:claude` skill, which documents development commands (test/lint/typecheck) directly in each project's CLAUDE.md. Projects that used `/maestro:dev` should move their commands into a self-contained "Development Commands" section in CLAUDE.md.
+
 ### Changed
 
 - **Plugin renamed from `workflow` to `maestro`** (breaking): `workflow` collides with an existing plugin in the community marketplace. The skill namespace prefix changes from `/workflow:` to `/maestro:`. Existing installs must uninstall the old plugin and install `maestro@claude-skills`.
