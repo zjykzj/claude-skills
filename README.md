@@ -33,22 +33,12 @@ claude plugin install maestro@claude-skills
 
 Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin install maestro@claude-skills`.
 
-**Per-project enablement:** projects opt in by committing this to their `.claude/settings.json`:
+**Per-project config (optional):** the install above is per-machine and applies to every project — no per-project config is required. Two optional aids exist:
 
-```json
-{
-  "extraKnownMarketplaces": {
-    "claude-skills": {
-      "source": { "source": "github", "repo": "zjykzj/claude-skills" }
-    }
-  },
-  "enabledPlugins": {
-    "maestro@claude-skills": true
-  }
-}
-```
+- **CLAUDE.md**: document the install command in the project's CLAUDE.md so contributors find it. This is the recommended approach.
+- **Team repos**: committing `.claude/settings.json` with `extraKnownMarketplaces` + `enabledPlugins` auto-registers the marketplace for clones (after workspace trust) and signals plugin use — installation still requires each user to run the install command once.
 
-On a fresh clone, the marketplace auto-registers once the user trusts the folder; the plugin then reports "not installed" until each user runs the install command once. Nothing breaks meanwhile.
+Neither is needed for the plugin to work; nothing breaks when the plugin is absent.
 
 ## Design: optional, never required
 
