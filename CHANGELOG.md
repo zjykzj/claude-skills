@@ -27,3 +27,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Per-project config guidance revised**: the project-level `.claude/settings.json` recipe is now documented as an optional team aid; the recommended path is documenting install steps in the project's CLAUDE.md. Added a CLAUDE.md for this repository (conventions, version-gating rule, AI model configuration).
 - **MIT license added**: LICENSE file (copyright zjykzj), the `license` field in `plugin.json`, and a License section in README.md.
+- **AI model config updated to `DeepSeek-V4-Pro`**: `{{AI_MODEL_NAME}}` now matches the model powering the session; commit `Co-Authored-By` lines read `DeepSeek-V4-Pro <noreply@deepseek.com>`.
+- **Release Configuration section added to CLAUDE.md**: documents the version bump locations (`plugins/maestro/plugin.json`, `CHANGELOG.md`) and `{{REPO_URL}}` consumed by the release skill.

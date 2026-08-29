@@ -17,5 +17,16 @@ claude-skills is a Claude Code plugin marketplace hosting the `maestro` plugin â
 
 ## AI Model Configuration
 
-{{AI_MODEL_NAME}} = DeepSeek-V4.0
+{{AI_MODEL_NAME}} = DeepSeek-V4-Pro
 {{AI_MODEL_EMAIL}} = noreply@deepseek.com
+
+## Release Configuration
+
+Version bump locations:
+
+| # | File | Field |
+|---|------|-------|
+| 1 | `plugins/maestro/plugin.json` | `version = "X.Y.Z"` |
+| 2 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
+
+{{REPO_URL}} = https://github.com/zjykzj/claude-skills
