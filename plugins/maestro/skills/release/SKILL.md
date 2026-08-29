@@ -1,6 +1,6 @@
 ---
 name: release
-description: Bump version and publish a GitHub release
+description: Bump the project version and publish a GitHub release. Use when releasing a new version, and whenever the user asks anything about the release process — which semver bump to pick from the commit history, version bump locations, the release commit message format, tagging and pushing the release, or renaming the CHANGELOG [Unreleased] section — even if they only ask a question rather than request a release.
 allowed-tools: Bash, Read, Edit, Grep
 ---
 

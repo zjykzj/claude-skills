@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Create or modify spec files following project methodology, and drive SDD (spec-first development). Use when writing, editing, or reviewing specs/ files — and BEFORE implementing any feature or behavior change that affects a contract documented in specs/.
+description: Create or modify spec files following project methodology, and drive SDD (spec-first development). Use when writing, editing, or reviewing specs/ files; before implementing any feature or behavior change that affects a contract documented in specs/; and whenever the user asks anything about spec-first development — the SDD workflow, spec versioning rules, impact analysis, or what belongs in specs/ vs CLAUDE.md — even if they only ask a question rather than request an edit. Do not use for writing or debugging tests, including contract tests.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 ---
 

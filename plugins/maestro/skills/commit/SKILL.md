@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Create git commits following project conventions
+description: Create git commits following project conventions. Use when committing code or preparing a commit message, and whenever the user asks anything about commit conventions — the commit message format, Conventional Commit type classification, the mandatory Co-Authored-By line, or CHANGELOG maintenance rules (subsections, breaking-change marking, what to skip) — even if they only ask a question rather than request a commit.
 allowed-tools: Bash, Read, Edit
 ---
 

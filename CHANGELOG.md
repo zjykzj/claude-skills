@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Skill trigger descriptions optimized for `spec`, `commit`, and `release`**: descriptions now cover question-type requests (workflow, format, classification) instead of only action requests. Evaluated with 20-query trigger eval sets per skill; should-trigger recall improved from 66% → 96% (spec), 45% → 100% (commit), 85% → 100% (release) with zero near-miss regressions. `claude` was already at 100% and is unchanged.
 - **Marketplace catalog description listed the removed `dev` skill**: `.claude-plugin/marketplace.json` now matches the plugin manifest's skill list (spec, commit, release, claude).
 
 ### Docs
