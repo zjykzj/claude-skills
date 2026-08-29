@@ -50,7 +50,7 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 ## Maintaining this repo
 
-**Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/plugin.json`. Users pick it up with `/plugin update`.
+**Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/plugin.json`. Users pick it up with `/plugin update`. See [docs/creating-a-skill.md](docs/creating-a-skill.md) for the skill format and full procedure.
 
 **Add a plugin**: create `plugins/<name>/` with its own `plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 

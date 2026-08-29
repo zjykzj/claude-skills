@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Marketplace catalog description listed the removed `dev` skill**: `.claude-plugin/marketplace.json` now matches the plugin manifest's skill list (spec, commit, release, claude).
 
+### Docs
+
+- **Skill creation guide added**: new `docs/creating-a-skill.md` covering the skill format (frontmatter, Bootstrap/Required Configuration sections), its purpose (plugin-distributed, self-configuring, optional), and the add-a-skill procedure (validate, test, version bump, CHANGELOG). README links to it.
+
 ## [3.0.0] - 2026-08-29
 
 ### Added
