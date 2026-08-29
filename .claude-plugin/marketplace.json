@@ -1,0 +1,12 @@
+{
+  "name": "claude-skills",
+  "description": "Reusable Claude Code development workflow skills, distributed as plugins",
+  "owner": { "name": "zjykzj" },
+  "plugins": [
+    {
+      "name": "workflow",
+      "source": "./plugins/workflow",
+      "description": "Spec-first development workflow skills: spec, dev, commit, release, claude"
+    }
+  ]
+}

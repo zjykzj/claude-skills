@@ -1,0 +1,31 @@
+#!/bin/bash
+# SDD methodology reminder — invoked by PreToolUse hook on specs/ file edits.
+# Reads the tool input JSON from stdin, checks if the file path contains "specs/",
+# and if so, outputs a hook payload that injects the /workflow:spec reminder into Claude's context.
+#
+# Requirements: python3 (for JSON parsing from stdin)
+#
+# Ships with the workflow plugin: registered in hooks/hooks.json and resolved via
+# ${CLAUDE_PLUGIN_ROOT}. No project-side hook configuration needed. This script is
+# cwd-independent — it reads the tool input JSON from stdin only.
+
+# Extract file_path from the harness's stdin JSON payload
+file_path=$(python3 -c "
+import json, sys
+payload = json.load(sys.stdin)
+tool_input = payload.get('tool_input') or {}
+print(tool_input.get('file_path', ''))
+" 2>/dev/null)
+
+# Only trigger for paths containing "specs/"
+if echo "$file_path" | grep -q 'specs/'; then
+  cat <<'JSON'
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "additionalContext": "You are about to modify a specs/ file. Follow the /workflow:spec skill SDD methodology: spec-first workflow, version bump per change type, classification rules. Invoke the spec skill first if it is not already loaded in this session."
+  },
+  "systemMessage": "specs/ edit detected — /workflow:spec SDD methodology applies"
+}
+JSON
+fi
