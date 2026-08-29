@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Chinese README added**: `README.zh-CN.md` mirrors the English README (structure, installation, design, maintenance, local testing).
 - **skill-creator study guide added**: `docs/skill-creator.md` (Chinese) explains the tool's purpose, principles (progressive disclosure, dual-run baselines, quantitative benchmarks, description optimization), and full operating loop, with links to the canonical upstream SKILL.md.
+- **docs/ converted to Chinese**: `docs/creating-a-skill.md` translated to Chinese (technical terms, paths, and commands kept in English); docs/ is now uniformly Chinese.
 - **Skill creation guide added**: new `docs/creating-a-skill.md` covering the skill format (frontmatter, Bootstrap/Required Configuration sections), its purpose (plugin-distributed, self-configuring, optional), and the add-a-skill procedure (validate, test, version bump, CHANGELOG). README links to it.
 - **Skill optimization methodology documented**: `docs/creating-a-skill.md` now covers the evaluation-driven optimization loop (description trigger optimization + with/without behavioral eval) per the official `skill-creator` plugin; README and CLAUDE.md point to it.
 
