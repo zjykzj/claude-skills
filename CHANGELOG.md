@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Marketplace catalog description listed the removed `dev` skill**: `.claude-plugin/marketplace.json` now matches the plugin manifest's skill list (spec, commit, release, claude).
+
 ## [3.0.0] - 2026-08-29
 
 ### Added

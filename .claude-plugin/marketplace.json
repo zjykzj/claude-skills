@@ -6,7 +6,7 @@
     {
       "name": "maestro",
       "source": "./plugins/maestro",
-      "description": "Spec-first development workflow skills: spec, dev, commit, release, claude"
+      "description": "Spec-first development workflow skills: spec, commit, release, claude"
     }
   ]
 }
