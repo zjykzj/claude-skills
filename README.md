@@ -64,3 +64,7 @@ claude --plugin-dir plugins/maestro             # Load directly without install
 ```
 
 Run `/reload-plugins` after edits; `SKILL.md` changes hot-reload in-session, but changes to `hooks/` or `plugin.json` need a reload.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Copyright (c) 2026 zjykzj.

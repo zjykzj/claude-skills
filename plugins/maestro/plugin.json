@@ -3,5 +3,6 @@
   "version": "3.0.0",
   "description": "Spec-first development workflow skills: /maestro:spec (SDD methodology + enforcement hook), /maestro:commit (commit format + CHANGELOG), /maestro:release (version bump + GitHub release), /maestro:claude (CLAUDE.md authoring, including structured development-command docs)",
   "author": { "name": "zjykzj" },
+  "license": "MIT",
   "hooks": "./hooks/hooks.json"
 }

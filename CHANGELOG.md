@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Initial marketplace with the `workflow` plugin** (breaking): the five skills (spec, dev, commit, release, claude) extracted from DataFlow-CV now ship as one plugin instead of copied files. Skills are invoked namespaced as `/workflow:<skill>`. The SDD enforcement PreToolUse hook is bundled in the plugin and resolved via `${CLAUDE_PLUGIN_ROOT}` — no project-side hook setup.
+- **Initial marketplace with the `workflow` plugin** (breaking): the five skills (spec, dev, commit, release, claude) now ship as one plugin instead of copied files. Skills are invoked namespaced as `/workflow:<skill>`. The SDD enforcement PreToolUse hook is bundled in the plugin and resolved via `${CLAUDE_PLUGIN_ROOT}` — no project-side hook setup.
 
 ### Changed
 
@@ -26,3 +26,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Docs
 
 - **Per-project config guidance revised**: the project-level `.claude/settings.json` recipe is now documented as an optional team aid; the recommended path is documenting install steps in the project's CLAUDE.md. Added a CLAUDE.md for this repository (conventions, version-gating rule, AI model configuration).
+- **MIT license added**: LICENSE file (copyright zjykzj), the `license` field in `plugin.json`, and a License section in README.md.
