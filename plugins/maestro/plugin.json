@@ -1,0 +1,7 @@
+{
+  "name": "maestro",
+  "version": "2.0.0",
+  "description": "Spec-first development workflow skills: /maestro:spec (SDD methodology + enforcement hook), /maestro:dev (test/lint/typecheck), /maestro:commit (commit format + CHANGELOG), /maestro:release (version bump + GitHub release), /maestro:claude (CLAUDE.md authoring)",
+  "author": { "name": "zjykzj" },
+  "hooks": "./hooks/hooks.json"
+}

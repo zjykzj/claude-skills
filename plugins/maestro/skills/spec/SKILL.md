@@ -197,7 +197,7 @@ The only project-side piece is documentation. If the project follows SDD (has a 
 
 **SDD hard rules:**
 
-1. **Invoke `/workflow:spec` before any edit to `specs/` files** — the methodology must be loaded before touching spec content.
+1. **Invoke `/maestro:spec` before any edit to `specs/` files** — the methodology must be loaded before touching spec content.
 2. **Spec-first ordering**: any feat/fix that affects a contract documented in `specs/` must (a) update the affected spec to the target state **before** implementing, (b) verify the implementation against the spec **after** coding (conformance check), and (c) list the affected spec files in the commit body.
 ```
 

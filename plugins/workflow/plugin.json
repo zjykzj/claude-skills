@@ -1,7 +1,0 @@
-{
-  "name": "workflow",
-  "version": "1.0.1",
-  "description": "Spec-first development workflow skills: /workflow:spec (SDD methodology + enforcement hook), /workflow:dev (test/lint/typecheck), /workflow:commit (commit format + CHANGELOG), /workflow:release (version bump + GitHub release), /workflow:claude (CLAUDE.md authoring)",
-  "author": { "name": "zjykzj" },
-  "hooks": "./hooks/hooks.json"
-}

@@ -4,8 +4,8 @@
   "owner": { "name": "zjykzj" },
   "plugins": [
     {
-      "name": "workflow",
-      "source": "./plugins/workflow",
+      "name": "maestro",
+      "source": "./plugins/maestro",
       "description": "Spec-first development workflow skills: spec, dev, commit, release, claude"
     }
   ]

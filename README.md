@@ -9,7 +9,7 @@ claude-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace catalog (one entry per plugin)
 └── plugins/
-    └── workflow/                 # Plugin: workflow
+    └── maestro/                 # Plugin: maestro
         ├── plugin.json           # Manifest (name = skill namespace prefix)
         ├── skills/               # Skills bundled in this plugin
         │   ├── spec/             #   SDD methodology + enforcement hook script
@@ -23,16 +23,16 @@ claude-skills/
 
 ## Installation
 
-Plugin skills are namespaced by plugin name — `/workflow:spec`, `/workflow:dev`, etc.
+Plugin skills are namespaced by plugin name — `/maestro:spec`, `/maestro:dev`, etc.
 
 **One-time, per machine:**
 
 ```bash
 claude plugin marketplace add zjykzj/claude-skills
-claude plugin install workflow@claude-skills
+claude plugin install maestro@claude-skills
 ```
 
-Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin install workflow@claude-skills`.
+Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin install maestro@claude-skills`.
 
 **Per-project enablement:** projects opt in by committing this to their `.claude/settings.json`:
 
@@ -44,7 +44,7 @@ Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin ins
     }
   },
   "enabledPlugins": {
-    "workflow@claude-skills": true
+    "maestro@claude-skills": true
   }
 }
 ```
@@ -61,7 +61,7 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 ## Maintaining this repo
 
-**Add a skill** to the `workflow` plugin: create `plugins/workflow/skills/<name>/SKILL.md`, then bump `version` in `plugins/workflow/plugin.json`. Users pick it up with `/plugin update`.
+**Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/plugin.json`. Users pick it up with `/plugin update`.
 
 **Add a plugin**: create `plugins/<name>/` with its own `plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 
@@ -70,8 +70,8 @@ These skills are **auxiliary tools**. A project develops fine without them:
 ## Testing locally
 
 ```bash
-claude plugin validate plugins/workflow          # Manifest/schema check
-claude --plugin-dir plugins/workflow             # Load directly without install
+claude plugin validate plugins/maestro          # Manifest/schema check
+claude --plugin-dir plugins/maestro             # Load directly without install
 ```
 
 Run `/reload-plugins` after edits; `SKILL.md` changes hot-reload in-session, but changes to `hooks/` or `plugin.json` need a reload.
