@@ -52,6 +52,8 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 **Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/plugin.json`. Users pick it up with `/plugin update`. See [docs/creating-a-skill.md](docs/creating-a-skill.md) for the skill format and full procedure.
 
+**Develop or optimize a skill** evaluation-driven: description trigger optimization plus a with/without behavioral eval loop, per the official `skill-creator` plugin (`/plugin install skill-creator@anthropics/claude-plugins-official`). Full methodology in [docs/creating-a-skill.md](docs/creating-a-skill.md).
+
 **Add a plugin**: create `plugins/<name>/` with its own `plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 
 **Skill updates reach users** only after a version bump (plugin.json `version` gates updates).

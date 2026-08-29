@@ -13,6 +13,7 @@ claude-skills is a Claude Code plugin marketplace hosting the `maestro` plugin �
 - **CHANGELOG discipline**: every user-facing commit updates the `[Unreleased]` section in the same commit; subsections ordered Added → Changed → Fixed → Removed → Security → Docs; breaking changes marked `(breaking)`
 - **Validate before commit**: `claude plugin validate .`
 - **Test locally**: `claude --plugin-dir plugins/maestro` loads the plugin without installing
+- **Skill development & optimization**: new skills and optimizations follow the evaluation-driven methodology in `docs/creating-a-skill.md` (description trigger optimization + behavioral eval loop, per the official `skill-creator` plugin)
 - **Skill changes hot-reload** in-session; changes to `hooks/` or `plugin.json` need `/reload-plugins`
 
 ## AI Model Configuration

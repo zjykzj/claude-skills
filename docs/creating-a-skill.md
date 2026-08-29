@@ -68,6 +68,36 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 
 Reload behavior: `SKILL.md` changes hot-reload in-session; changes to `hooks/` or `plugin.json` need `/reload-plugins`.
 
+## Evaluating and optimizing a skill
+
+Authoring is the start, not the end. The official `skill-creator` plugin (install: `/plugin install skill-creator@anthropics/claude-plugins-official`) defines the optimization methodology — evaluation-driven, in two lines:
+
+### Line 1: description optimization (trigger accuracy)
+
+The frontmatter `description` is the primary trigger signal, and models tend to under-trigger skills. Optimize it against a trigger eval set:
+
+1. Write ~20 realistic queries: 8–10 that **should** trigger the skill (varied phrasings of the same intent, including cases that never name the skill or its keywords) and 8–10 **near-miss** queries that should NOT trigger (they share keywords or concepts but need something else). Near-misses are the hard part — obviously irrelevant negatives test nothing.
+2. Review the set with the user — bad eval queries lead to bad descriptions.
+3. Iterate: measure the description's trigger rate on the set (run each query multiple times), propose improvements from the failures, re-test. Hold out part of the set for final selection to avoid overfitting. `skill-creator` ships `scripts/run_loop.py` to automate this loop.
+
+### Line 2: behavioral evaluation (does the skill actually help)
+
+1. Draft 2–3 realistic test prompts.
+2. Run each with the skill and without — baseline is "no skill" for a new skill, "old version" for an improvement — and record outputs, assertions, timing, and token usage.
+3. Grade assertions and open the HTML reviewer (`eval-viewer/generate_review.py`) for the human to inspect outputs and leave feedback.
+4. Improve from the feedback and repeat until the user is satisfied, the feedback is empty, or no meaningful progress.
+
+### Advanced: blind comparison
+
+For "is the new version actually better?" questions, an independent agent judges two outputs without knowing which is which (`agents/comparator.md`) — the human review loop is usually sufficient.
+
+### Improvement principles
+
+- **Generalize from feedback** — the goal is a skill that works across many prompts, not one overfit to the test examples
+- **Keep the prompt lean** — remove instructions that aren't pulling their weight
+- **Explain the why** behind each instruction instead of piling on rigid MUSTs
+- **Bundle repeated work** — if test runs repeatedly reinvent the same helper script, write it once into `scripts/`
+
 ## Bundling scripts and hooks (optional)
 
 A skill may ship executable scripts for its own use, or register a hook in `plugins/maestro/hooks/hooks.json`. `spec` does both: `scripts/sdd-reminder.sh` is registered as a PreToolUse hook on `Edit|Write` matching `specs/` paths, resolved via `${CLAUDE_PLUGIN_ROOT}` — no project-side hook configuration needed. Commit hook scripts with the `+x` bit: hooks run them directly, not via `sh`.

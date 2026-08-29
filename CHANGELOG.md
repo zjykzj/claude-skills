@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Docs
 
 - **Skill creation guide added**: new `docs/creating-a-skill.md` covering the skill format (frontmatter, Bootstrap/Required Configuration sections), its purpose (plugin-distributed, self-configuring, optional), and the add-a-skill procedure (validate, test, version bump, CHANGELOG). README links to it.
+- **Skill optimization methodology documented**: `docs/creating-a-skill.md` now covers the evaluation-driven optimization loop (description trigger optimization + with/without behavioral eval) per the official `skill-creator` plugin; README and CLAUDE.md point to it.
 
 ## [3.0.0] - 2026-08-29
 
