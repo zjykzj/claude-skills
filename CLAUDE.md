@@ -4,11 +4,11 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-claude-skills is a Claude Code plugin marketplace hosting the `maestro` plugin — reusable development workflow skills (`/maestro:spec`, `/maestro:commit`, `/maestro:release`, `/maestro:claude`) distributed via plugin install instead of copied files.
+claude-skills is a Claude Code plugin marketplace hosting two plugins, distributed via plugin install instead of copied files: `maestro` — reusable development workflow skills (`/maestro:spec`, `/maestro:commit`, `/maestro:release`, `/maestro:claude`); `dataflow` — the dataflow-cv library usage skill (`/dataflow:dataflow-cv`).
 
 ## Key Conventions
 
-- **Skills live in** `plugins/maestro/skills/<name>/SKILL.md`; each skill ends with "Bootstrap" (first-use config auto-setup) and "Required Configuration" sections
+- **Skills live in** `plugins/<plugin>/skills/<name>/SKILL.md`; each skill ends with "Bootstrap" (first-use config auto-setup) and "Required Configuration" sections
 - **Version gates updates**: every user-facing change bumps `version` in `plugins/maestro/plugin.json`, otherwise users never receive the change (`/plugin update` skips unchanged versions)
 - **CHANGELOG discipline**: every user-facing commit updates the `[Unreleased]` section in the same commit; subsections ordered Added → Changed → Fixed → Removed → Security → Docs; breaking changes marked `(breaking)`
 - **Validate before commit**: `claude plugin validate .`
@@ -29,5 +29,6 @@ Version bump locations:
 |---|------|-------|
 | 1 | `plugins/maestro/plugin.json` | `version = "X.Y.Z"` |
 | 2 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
+| 3 | `plugins/dataflow/plugin.json` | `version = "X.Y.Z"` (bumped only on dataflow-cv releases — mirrors dataflow-cv's version) |
 
 {{REPO_URL}} = https://github.com/zjykzj/claude-skills

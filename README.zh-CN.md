@@ -8,30 +8,35 @@
 claude-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # 市场目录(每个插件一条)
-└── plugins/
-    └── maestro/                 # 插件:maestro
-        ├── plugin.json           # 清单(name = 技能命名空间前缀)
-        ├── skills/               # 插件内置技能
-        │   ├── spec/             #   SDD 方法论 + 强制执行钩子脚本
-        │   ├── commit/           #   提交格式 + CHANGELOG 维护
-        │   ├── release/          #   版本 bump + GitHub Release
-        │   └── claude/           #   CLAUDE.md 编写,含开发命令文档
-        └── hooks/
-            └── hooks.json        # PreToolUse 钩子:编辑 specs/ 时提醒 SDD
+├── plugins/
+│   ├── maestro/                 # 插件:maestro
+│   │   ├── plugin.json           # 清单(name = 技能命名空间前缀)
+│   │   ├── skills/               # 插件内置技能
+│   │   │   ├── spec/             #   SDD 方法论 + 强制执行钩子脚本
+│   │   │   ├── commit/           #   提交格式 + CHANGELOG 维护
+│   │   │   ├── release/          #   版本 bump + GitHub Release
+│   │   │   └── claude/           #   CLAUDE.md 编写,含开发命令文档
+│   │   └── hooks/
+│   │       └── hooks.json        # PreToolUse 钩子:编辑 specs/ 时提醒 SDD
+│   └── dataflow/                # 插件:dataflow(版本镜像 dataflow-cv)
+│       ├── plugin.json           # 清单(name = 技能命名空间前缀)
+│       └── skills/
+│           └── dataflow-cv/      #   dataflow-cv 库使用技能
 ```
 
 ## 安装
 
-插件技能以插件名作为命名空间前缀 —— `/maestro:spec`、`/maestro:commit` 等。
+插件技能以插件名作为命名空间前缀 —— `/maestro:spec`、`/maestro:commit`、`/dataflow:dataflow-cv` 等。
 
 **每台机器只需一次:**
 
 ```bash
 claude plugin marketplace add zjykzj/claude-skills
 claude plugin install maestro@claude-skills
+claude plugin install dataflow@claude-skills
 ```
 
-或在会话内执行:`/plugin marketplace add zjykzj/claude-skills`,然后 `/plugin install maestro@claude-skills`。
+或在会话内执行:`/plugin marketplace add zjykzj/claude-skills`,然后 `/plugin install maestro@claude-skills`(或 `dataflow@claude-skills`)。
 
 **项目级配置(可选):** 上述安装是机器级的,对每个项目都生效 —— 无需任何项目级配置。另有两个可选辅助手段:
 

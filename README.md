@@ -8,30 +8,35 @@ A [Claude Code](https://code.claude.com/docs) plugin marketplace hosting reusabl
 claude-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace catalog (one entry per plugin)
-└── plugins/
-    └── maestro/                 # Plugin: maestro
-        ├── plugin.json           # Manifest (name = skill namespace prefix)
-        ├── skills/               # Skills bundled in this plugin
-        │   ├── spec/             #   SDD methodology + enforcement hook script
-        │   ├── commit/           #   commit format + CHANGELOG maintenance
-        │   ├── release/          #   version bump + GitHub release
-        │   └── claude/           #   CLAUDE.md authoring, incl. development-command docs
-        └── hooks/
-            └── hooks.json        # PreToolUse hook: SDD reminder on specs/ edits
+├── plugins/
+│   ├── maestro/                 # Plugin: maestro
+│   │   ├── plugin.json           # Manifest (name = skill namespace prefix)
+│   │   ├── skills/               # Skills bundled in this plugin
+│   │   │   ├── spec/             #   SDD methodology + enforcement hook script
+│   │   │   ├── commit/           #   commit format + CHANGELOG maintenance
+│   │   │   ├── release/          #   version bump + GitHub release
+│   │   │   └── claude/           #   CLAUDE.md authoring, incl. development-command docs
+│   │   └── hooks/
+│   │       └── hooks.json        # PreToolUse hook: SDD reminder on specs/ edits
+│   └── dataflow/                # Plugin: dataflow (version mirrors dataflow-cv)
+│       ├── plugin.json           # Manifest (name = skill namespace prefix)
+│       └── skills/
+│           └── dataflow-cv/      #   dataflow-cv library usage skill
 ```
 
 ## Installation
 
-Plugin skills are namespaced by plugin name — `/maestro:spec`, `/maestro:commit`, etc.
+Plugin skills are namespaced by plugin name — `/maestro:spec`, `/maestro:commit`, `/dataflow:dataflow-cv`, etc.
 
 **One-time, per machine:**
 
 ```bash
 claude plugin marketplace add zjykzj/claude-skills
 claude plugin install maestro@claude-skills
+claude plugin install dataflow@claude-skills
 ```
 
-Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin install maestro@claude-skills`.
+Or in-session: `/plugin marketplace add zjykzj/claude-skills`, then `/plugin install maestro@claude-skills` (or `dataflow@claude-skills`).
 
 **Per-project config (optional):** the install above is per-machine and applies to every project — no per-project config is required. Two optional aids exist:
 

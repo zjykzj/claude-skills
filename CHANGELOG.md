@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`dataflow` plugin with the `dataflow-cv` skill**: CLI command tree (analyse/convert/visualize/evaluate), Python API reference, canonical examples (`assets/test_data/`), and known gotchas for the DataFlow-CV library. Gated on `dataflow-cv>=2.0.0` via a version-check step inside the skill.
+
 ## [3.0.1] - 2026-08-29
 
 ### Fixed

@@ -1,12 +1,17 @@
 {
   "name": "claude-skills",
-  "description": "Reusable Claude Code development workflow skills, distributed as plugins",
+  "description": "Reusable Claude Code skills, distributed as plugins",
   "owner": { "name": "zjykzj" },
   "plugins": [
     {
       "name": "maestro",
       "source": "./plugins/maestro",
       "description": "Spec-first development workflow skills: spec, commit, release, claude"
+    },
+    {
+      "name": "dataflow",
+      "source": "./plugins/dataflow",
+      "description": "dataflow-cv library skill: CLI/API reference, canonical examples, known gotchas"
     }
   ]
 }
