@@ -19,7 +19,7 @@
 
 1. **bump** 该插件的 `plugins/<plugin>/plugin.json` 版本(交付闸门:不 bump 则 `/plugin update` 跳过,用户永远收不到变更)
 2. **写 CHANGELOG**:在 `CHANGELOG.md` 中新增版本头 `## [<plugin>-X.Y.Z] - YYYY-MM-DD`,下方按 Added → Changed → Fixed → Removed → Security → Docs 顺序写条目;版本号与 plugin.json 一致
-3. **打 tag**:`<plugin>-vX.Y.Z`,指向该版本对应的提交
+3. **打 tag**:`claude plugin tag plugins/<plugin> --push` —— 生成工具原生的 `{name}--v{version}` 格式(如 `dataflow--v2.0.1`),并校验 `plugin.json` 与 marketplace 条目一致(也可手工 `git tag <plugin>--vX.Y.Z`)
 4. **发 GitHub Release**:标题 `<plugin> vX.Y.Z: <一句话摘要>`,正文 = CHANGELOG 对应章节 + 末尾引用链接
 
 两个插件同时变更:各自 bump、各自打 tag、各自发 Release。
@@ -40,7 +40,7 @@
 | maestro | 3.0.1 → 3.0.2 |
 | dataflow | 不动 |
 | CHANGELOG | `## [maestro-3.0.2]` 头 + 条目 |
-| tag / Release | `maestro-v3.0.2` / `maestro v3.0.2` |
+| tag / Release | `maestro--v3.0.2` / `maestro v3.0.2` |
 
 用户端:`/plugin update` 只更新 maestro,dataflow 无感。
 
@@ -51,7 +51,7 @@
 | dataflow | 2.0.1 → 2.0.2(skill 侧修复,补丁位) |
 | maestro | 不动 |
 | CHANGELOG | `## [dataflow-2.0.2]` 头 + 条目 |
-| tag / Release | `dataflow-v2.0.2` / `dataflow v2.0.2` |
+| tag / Release | `dataflow--v2.0.2` / `dataflow v2.0.2` |
 
 ### dataflow-cv 库发新版(如 2.1.0),skill 跟随升级
 
@@ -60,14 +60,16 @@
 | dataflow | 2.0.2 → 2.1.0(镜像 dataflow-cv 主次版本) |
 | maestro | 不动 |
 | CHANGELOG | `## [dataflow-2.1.0]` 头 + 条目 |
-| tag / Release | `dataflow-v2.1.0` / `dataflow v2.1.0` |
+| tag / Release | `dataflow--v2.1.0` / `dataflow v2.1.0` |
 
 ### 两个插件同时改
 
-各自 bump、各自写 CHANGELOG 头、各打各的 tag(`maestro-v3.0.3` + `dataflow-v2.1.1`)、各发各的 Release。
+各自 bump、各自写 CHANGELOG 头、各打各的 tag(`maestro--v3.0.3` + `dataflow--v2.1.1`)、各发各的 Release。
 
 ## 常见问题
 
 **GitHub 的 "Latest release" 标签在两个插件之间跳?** 正常现象 —— 谁最近发布就显示谁,不代表另一个插件过时。
 
 **历史遗留的裸版本 tag(v3.0.0 / v3.0.1)?** 单插件时代打的,语义上属于 maestro,保留原样;对应 Release 的标题已改为 `maestro v3.0.x` 前缀。
+
+**安装/更新究竟看什么?** 看市场仓库默认分支 HEAD 的 `marketplace.json` + 插件 `plugin.json` 的 version;tag 与 GitHub Release 不参与交付机制。详见 [plugin-installation.md](plugin-installation.md)。

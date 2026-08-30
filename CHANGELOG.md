@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Docs
 
-- **Per-plugin versioning and release rules adopted**: this repository no longer has a repo-level version — each plugin versions independently (`maestro` evolves on its own sequence; `dataflow` mirrors the dataflow-cv version it documents). CHANGELOG headers are plugin-scoped (`## [<plugin>-X.Y.Z]`), tags are plugin-prefixed (`<plugin>-vX.Y.Z`), and GitHub Releases are per plugin. Full rules: `docs/release-versioning.md`.
+- **Per-plugin versioning and release rules adopted**: this repository no longer has a repo-level version — each plugin versions independently (`maestro` evolves on its own sequence; `dataflow` mirrors the dataflow-cv version it documents). CHANGELOG headers are plugin-scoped (`## [<plugin>-X.Y.Z]`), tags are plugin-prefixed (`<plugin>--vX.Y.Z`), and GitHub Releases are per plugin. Full rules: `docs/release-versioning.md`.
+- **Plugin installation guide added**: `docs/plugin-installation.md` explains `plugin@marketplace` resolution (install snapshots the marketplace repo's default-branch HEAD commit — GitHub Releases/tags play no delivery role), the install/update/query command surface, the version-gate update mechanism, hot-reload rules, and the cache layout. Tag format aligned to the tool-native `{name}--v{version}` (`claude plugin tag`).
 
 ## [dataflow-2.0.1] - 2026-08-30
 
