@@ -23,12 +23,14 @@ claude-skills is a Claude Code plugin marketplace hosting two plugins, distribut
 
 ## Release Configuration
 
-Version bump locations:
+This repository has **no repo-level version** — each plugin versions independently and releases separately. Full rules: `docs/release-versioning.md`.
 
 | # | File | Field |
 |---|------|-------|
-| 1 | `plugins/maestro/plugin.json` | `version = "X.Y.Z"` |
-| 2 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
-| 3 | `plugins/dataflow/plugin.json` | `version = "X.Y.Z"` (mirrors the dataflow-cv version the skill documents; skill-side fixes bump the patch digit) |
+| 1 | `plugins/maestro/plugin.json` | `version = "X.Y.Z"` (bumped when maestro skills change; own sequence) |
+| 2 | `plugins/dataflow/plugin.json` | `version = "X.Y.Z"` (mirrors the dataflow-cv version the skill documents; skill-side fixes bump the patch digit) |
+| 3 | `CHANGELOG.md` | `## [<plugin>-X.Y.Z] - YYYY-MM-DD` header (same version as the released plugin) |
+
+Release flow (per plugin): bump its `plugin.json` → write its CHANGELOG header → tag `<plugin>-vX.Y.Z` → GitHub Release `<plugin> vX.Y.Z`.
 
 {{REPO_URL}} = https://github.com/zjykzj/claude-skills

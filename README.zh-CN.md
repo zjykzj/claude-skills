@@ -61,6 +61,8 @@ claude plugin install dataflow@claude-skills
 
 **新增插件**:创建 `plugins/<name>/` 目录及各自的 `plugin.json`,然后在 `.claude-plugin/marketplace.json` 中添加条目。用户单独安装 —— 插件粒度是逐项目启用/禁用的单位。
 
+**发布插件**:按插件版本化 —— 每个插件各自 bump、打 tag(`<plugin>-vX.Y.Z`)、发 Release;见 [docs/release-versioning.md](docs/release-versioning.md)。
+
 **技能更新只有 bump 版本后才能到达用户**(plugin.json 的 `version` 是更新门控)。
 
 ## 本地测试

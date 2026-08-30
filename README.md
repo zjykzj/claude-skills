@@ -61,6 +61,8 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 **Add a plugin**: create `plugins/<name>/` with its own `plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 
+**Release a plugin**: per-plugin versioning — each plugin bumps, tags (`<plugin>-vX.Y.Z`), and releases separately; see [docs/release-versioning.md](docs/release-versioning.md).
+
 **Skill updates reach users** only after a version bump (plugin.json `version` gates updates).
 
 ## Testing locally

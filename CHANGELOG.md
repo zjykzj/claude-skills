@@ -7,15 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Docs
 
-- **`dataflow` plugin with the `dataflow-cv` skill**: CLI command tree (analyse/convert/visualize/evaluate), Python API reference, canonical examples (`assets/test_data/`), and known gotchas for the DataFlow-CV library. Gated on `dataflow-cv>=2.0.0` via a version-check step inside the skill.
+- **Per-plugin versioning and release rules adopted**: this repository no longer has a repo-level version — each plugin versions independently (`maestro` evolves on its own sequence; `dataflow` mirrors the dataflow-cv version it documents). CHANGELOG headers are plugin-scoped (`## [<plugin>-X.Y.Z]`), tags are plugin-prefixed (`<plugin>-vX.Y.Z`), and GitHub Releases are per plugin. Full rules: `docs/release-versioning.md`.
+
+## [dataflow-2.0.1] - 2026-08-30
 
 ### Fixed
 
 - **`dataflow-cv` skill description broke YAML parsing**: the `: ` after `(v2.0.0+)` in the frontmatter description was parsed as a YAML mapping separator by GitHub's frontmatter renderer ("mapping values are not allowed in this context"). Replaced with an em dash; plugin version bumped to 2.0.1.
 
-## [3.0.1] - 2026-08-29
+## [dataflow-2.0.0] - 2026-08-30
+
+### Added
+
+- **`dataflow` plugin with the `dataflow-cv` skill**: CLI command tree (analyse/convert/visualize/evaluate), Python API reference, canonical examples (`assets/test_data/`), and known gotchas for the DataFlow-CV library. Gated on `dataflow-cv>=2.0.0` via a version-check step inside the skill.
+
+## [maestro-3.0.1] - 2026-08-29
 
 ### Fixed
 
@@ -30,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Skill creation guide added**: new `docs/creating-a-skill.md` covering the skill format (frontmatter, Bootstrap/Required Configuration sections), its purpose (plugin-distributed, self-configuring, optional), and the add-a-skill procedure (validate, test, version bump, CHANGELOG). README links to it.
 - **Skill optimization methodology documented**: `docs/creating-a-skill.md` now covers the evaluation-driven optimization loop (description trigger optimization + with/without behavioral eval) per the official `skill-creator` plugin; README and CLAUDE.md point to it.
 
-## [3.0.0] - 2026-08-29
+## [maestro-3.0.0] - 2026-08-29
 
 ### Added
 
