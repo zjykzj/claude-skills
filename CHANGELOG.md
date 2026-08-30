@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`dataflow` plugin with the `dataflow-cv` skill**: CLI command tree (analyse/convert/visualize/evaluate), Python API reference, canonical examples (`assets/test_data/`), and known gotchas for the DataFlow-CV library. Gated on `dataflow-cv>=2.0.0` via a version-check step inside the skill.
 
+### Fixed
+
+- **`dataflow-cv` skill description broke YAML parsing**: the `: ` after `(v2.0.0+)` in the frontmatter description was parsed as a YAML mapping separator by GitHub's frontmatter renderer ("mapping values are not allowed in this context"). Replaced with an em dash; plugin version bumped to 2.0.1.
+
 ## [3.0.1] - 2026-08-29
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "dataflow",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "dataflow-cv usage skill: CLI command tree (analyse/convert/visualize/evaluate), Python API reference, canonical examples, and known gotchas for the DataFlow-CV dataset processing library",
   "author": { "name": "zjykzj" },
   "license": "MIT"

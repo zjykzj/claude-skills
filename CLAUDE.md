@@ -29,6 +29,6 @@ Version bump locations:
 |---|------|-------|
 | 1 | `plugins/maestro/plugin.json` | `version = "X.Y.Z"` |
 | 2 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
-| 3 | `plugins/dataflow/plugin.json` | `version = "X.Y.Z"` (bumped only on dataflow-cv releases — mirrors dataflow-cv's version) |
+| 3 | `plugins/dataflow/plugin.json` | `version = "X.Y.Z"` (mirrors the dataflow-cv version the skill documents; skill-side fixes bump the patch digit) |
 
 {{REPO_URL}} = https://github.com/zjykzj/claude-skills
