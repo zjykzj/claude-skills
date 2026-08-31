@@ -23,7 +23,7 @@ EOF
 )"
 ```
 
-The `Co-Authored-By` line is **mandatory** for all commits. `{{AI_MODEL_NAME}}` and `{{AI_MODEL_EMAIL}}` are configured per-project in CLAUDE.md.
+The `Co-Authored-By` line is **mandatory** for all commits. `{{AI_MODEL_NAME}}` and `{{AI_MODEL_EMAIL}}` are configured per-project in the `## Maestro Configuration` section of CLAUDE.md.
 
 ## Conventional Commit Types
 
@@ -90,15 +90,13 @@ The CHANGELOG edit is part of the **same commit** as the code change — never a
 
 ## Bootstrap (First Use in a New Project)
 
-This skill reads its configuration from the project's CLAUDE.md. On first use in a project:
+Configuration lives in the unified `## Maestro Configuration` section of the project's CLAUDE.md, shared with the other maestro skills. On first use in a project:
 
-1. Grep CLAUDE.md for `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` definition lines.
-2. If missing, append the section below to CLAUDE.md — ask the user for the values rather than guessing. If CLAUDE.md does not exist, create it with just this section.
-3. If present, use the existing values unchanged.
+1. Grep CLAUDE.md for `## Maestro Configuration` and for `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` definition lines.
+2. If the section or the lines are missing, add what's missing — create the section at the end of CLAUDE.md containing just the lines below, or append the lines inside an existing section. If CLAUDE.md does not exist, create it with just this section. In either case, ask the user for the values rather than guessing.
+3. If the lines are present — inside or outside the section (legacy `## AI Model Configuration` format) — use the existing values unchanged. If they sit outside the section, tell the user to merge them into `## Maestro Configuration`.
 
 ```markdown
-## AI Model Configuration
-
 {{AI_MODEL_NAME}} = <model-name>
 {{AI_MODEL_EMAIL}} = <model-email>
 ```
@@ -107,9 +105,9 @@ This skill reads its configuration from the project's CLAUDE.md. On first use in
 
 ## Required Configuration
 
-Define these variables in the project's CLAUDE.md (Git Operations section):
+Defined in the project's CLAUDE.md, `## Maestro Configuration` section (unified with the other maestro skills — shared variables are defined once at the section top):
 
 | Variable | Purpose | Example |
 |----------|---------|---------|
-| `{{AI_MODEL_NAME}}` | `Co-Authored-By` name | `DeepSeek-V4.0` |
+| `{{AI_MODEL_NAME}}` | `Co-Authored-By` name | `DeepSeek-V4-Pro` |
 | `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` email | `noreply@deepseek.com` |

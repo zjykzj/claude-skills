@@ -29,6 +29,7 @@ Apply these principles when writing or modifying CLAUDE.md.
 ## Architecture — module dependency diagram, hard constraints, data flow pipeline
 ## Critical Implementation Details — most error-prone areas, with cross-references to related gotchas
 ## Development Commands — install, test, lint, manual verification
+## Maestro Configuration — plugin-injected config (`{{VARIABLE}}` lines + version bump locations table); pure config, no prose
 ## Known Gotchas — categorized by topic with priority markers ([!]=critical, [*]=important)
 ## Test Structure
 ```
@@ -69,6 +70,31 @@ pip install -e .[dev]                 # With test/lint deps
 
 4. **Keep it factual**: commands that exist and pass today, not aspirational ones. Missing tool → note the install command, don't skip silently.
 5. **No skill indirection**: the section stands alone — a developer without any skills installed can run the project's checks from this section alone.
+
+## Maestro Configuration Section
+
+The `## Maestro Configuration` section holds the plugin's injected configuration — **pure config, no prose**:
+
+```markdown
+## Maestro Configuration
+
+{{AI_MODEL_NAME}} = DeepSeek-V4-Pro
+{{AI_MODEL_EMAIL}} = noreply@deepseek.com
+{{REPO_URL}} = https://github.com/owner/repo
+{{PACKAGE_NAME}} = none
+
+### Version Bump Locations
+
+| # | File | Field |
+|---|------|-------|
+| 1 | `VERSION` | `X.Y.Z` single line |
+| 2 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
+```
+
+- Shared variables are defined once at the section top (`{{AI_MODEL_NAME}}`/`{{AI_MODEL_EMAIL}}` are consumed by both commit and release); skill-specific content sits in fixed subsections.
+- Each skill injects only its own lines on first use (Bootstrap); the section accumulates.
+- `{{PACKAGE_NAME}} = none` for projects without a Python package.
+- The section is inert without the plugin — never delete it, never mix prose into it.
 
 ## Known Gotchas Writing Guidelines
 

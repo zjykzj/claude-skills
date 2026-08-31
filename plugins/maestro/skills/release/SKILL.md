@@ -24,7 +24,7 @@ Review `git log` since the last tag. Classify each commit's conventional commit 
 
 ## Step 1: Bump Version
 
-Update **all** version locations configured for this project. See CLAUDE.md for the exact file paths — typical patterns include:
+Update **all** version locations configured for this project. See the `### Version Bump Locations` table in the `## Maestro Configuration` section of CLAUDE.md for the exact file paths — typical patterns include:
 
 | Pattern | Example File | Field |
 |---------|-------------|-------|
@@ -33,7 +33,7 @@ Update **all** version locations configured for this project. See CLAUDE.md for 
 | Version file | `VERSION` | `X.Y.Z` (bare string, no field syntax) |
 | Changelog | `CHANGELOG.md` | Rename `## [Unreleased]` → `## [X.Y.Z] - YYYY-MM-DD`, then add a fresh empty `## [Unreleased]` at the top |
 
-The `{{PACKAGE_NAME}}` variable is defined in CLAUDE.md.
+The `{{PACKAGE_NAME}}` variable is defined in CLAUDE.md — `none` for projects without a Python package (bare `VERSION` file projects).
 
 **CHANGELOG rename, not rewrite**: the commit skill maintains `## [Unreleased]` on every commit, so the release does not write new entries. Rename the section header and reset it — the section content flows unchanged into the version bump commit (Step 2) and the GitHub Release body (Step 5).
 
@@ -91,35 +91,36 @@ Body template:
 
 ## Bootstrap (First Use in a New Project)
 
-This skill reads its configuration from the project's CLAUDE.md. On first use in a project:
+Configuration lives in the unified `## Maestro Configuration` section of the project's CLAUDE.md, shared with the other maestro skills. On first use in a project:
 
-1. Grep CLAUDE.md for `{{AI_MODEL_NAME}}`, `{{AI_MODEL_EMAIL}}`, `{{PACKAGE_NAME}}`, `{{REPO_URL}}` definition lines and a version bump locations table.
-2. If missing, detect what you can from the project (`git remote get-url origin` for the repo URL, `pyproject.toml` for the package, `grep -rn 'X.Y.Z' pyproject.toml <package>/` or a bare `VERSION` file for version locations), append the section below to CLAUDE.md, and tell the user what was detected.
-3. If present, use the existing values unchanged.
+1. Grep CLAUDE.md for `## Maestro Configuration` and for `{{AI_MODEL_NAME}}`, `{{AI_MODEL_EMAIL}}`, `{{PACKAGE_NAME}}`, `{{REPO_URL}}` definition lines and the `### Version Bump Locations` table.
+2. If the section or the lines are missing, add what's missing — create the section at the end of CLAUDE.md containing just the lines below, or append the lines inside an existing section (table last). If CLAUDE.md does not exist, create it with just this section. In either case, detect what you can from the project: `git remote get-url origin` for the repo URL; `pyproject.toml` with a package directory → `{{PACKAGE_NAME}} = <package>`, otherwise `{{PACKAGE_NAME}} = none`; `grep -rn 'X.Y.Z' pyproject.toml <package>/` or a bare `VERSION` file for version locations. Ask the user for `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` rather than guessing, and tell the user what was detected.
+3. If the lines are present — inside or outside the section (legacy `## Release Configuration` format) — use the existing values unchanged. If they sit outside the section, tell the user to merge them into `## Maestro Configuration`.
 
 ```markdown
-## Release Configuration
+{{AI_MODEL_NAME}} = <model-name>
+{{AI_MODEL_EMAIL}} = <model-email>
+{{REPO_URL}} = <repo-url>
+{{PACKAGE_NAME}} = <package-name|none>
 
-Version bump locations:
+### Version Bump Locations
 
 | # | File | Field |
 |---|------|-------|
 | 1 | `pyproject.toml` | `version = "X.Y.Z"` |
 | 2 | `<package>/__init__.py` | `__version__ = "X.Y.Z"` |
 | 3 | `CHANGELOG.md` | `## [X.Y.Z] - YYYY-MM-DD` section header |
-
-{{REPO_URL}} = <repo-url>
 ```
 
 **Degraded mode**: if configuration cannot be added, use the detected values per-invocation and state them in the output. Never block the release over missing configuration.
 
 ## Required Configuration
 
-Define these in the project's CLAUDE.md:
+Defined in the project's CLAUDE.md, `## Maestro Configuration` section (unified with the other maestro skills — shared variables are defined once at the section top):
 
 | Item | Purpose | Example |
 |------|---------|---------|
-| `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` line in bump commit | `DeepSeek-V4.0` / `noreply@deepseek.com` |
-| `{{PACKAGE_NAME}}` | Locate `__init__.py` version field | `dataflow` |
+| `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` line in bump commit | `DeepSeek-V4-Pro` / `noreply@deepseek.com` |
+| `{{PACKAGE_NAME}}` | Locate `__init__.py` version field; `none` for projects without a Python package | `dataflow` |
 | `{{REPO_URL}}` | CHANGELOG citation link in Release body | `https://github.com/owner/repo` |
-| Version bump locations table | Which files carry the version string | See CLAUDE.md "Release Configuration" |
+| Version bump locations table | Which files carry the version string | `### Version Bump Locations` subsection of `## Maestro Configuration` |

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.0.0] - 2026-08-31
+
+### Changed
+
+- **Unified configuration convention** (breaking): maestro skills now read and inject project configuration from a single `## Maestro Configuration` section in CLAUDE.md — shared variables (`{{AI_MODEL_NAME}}`, `{{AI_MODEL_EMAIL}}`, `{{REPO_URL}}`, `{{PACKAGE_NAME}}`) defined once at the section top, version bump locations in a fixed `### Version Bump Locations` subsection; `{{PACKAGE_NAME}} = none` marks projects without a Python package. The legacy `## AI Model Configuration` / `## Release Configuration` sections are no longer written — existing values are still honored and the skills prompt to merge them. `maestro:claude` documents the canonical section shape; `docs/creating-a-skill.md` carries the convention rules; this repo's own CLAUDE.md is migrated.
+
 ## [maestro-3.0.2] - 2026-08-31
 
 ### Added

@@ -17,7 +17,7 @@ skill 以插件形式分发而非拷贝文件,有四个原因:
 
 - **带更新的分发**:一次安装送达全部 skill;修复经 `/plugin update` 到达用户,由 `plugin.json` 的 `version` 字段门控。拷贝文件永远不会更新。
 - **命名空间**:`/maestro:<name>` 调用不会与项目文件或其他插件冲突。
-- **自配置**:每个 skill 以 Bootstrap 一节结尾,首次在新项目使用时,检测该项目 CLAUDE.md 中缺失的 `{{VARIABLE}}` 定义,追加自己的配置块,并汇报检测结果——无需手工设置。
+- **自配置**:每个 skill 以 Bootstrap 一节结尾,首次在新项目使用时,检测该项目 CLAUDE.md 的 `## Maestro Configuration` 节中缺失的 `{{VARIABLE}}` 定义,在节内追加自己的配置块,并汇报检测结果——无需手工设置。
 - **可选,从不强制**:没装插件 → 什么都不坏,只是 skill 不可用。这是整个插件的设计原则(见 README "Design: optional, never required")。
 
 ## 格式
@@ -53,9 +53,14 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 ### 正文规范
 
 - **可执行流程优于散文**:决策表、分类规则、精确命令——例如 release skill 的 semver 表。
-- **`{{VARIABLE}}` 占位符**表示项目级配置,从项目的 CLAUDE.md 解析。
-- **以 `## Bootstrap (First Use in a New Project)` 结尾**——首次使用自动配置:grep 项目 CLAUDE.md 查找变量,缺失则追加配置块,并汇报检测结果。要有 degraded mode——绝不因缺配置而卡死。
-- **以 `## Required Configuration` 结尾**——列出 skill 消费的每个变量。
+- **`{{VARIABLE}}` 占位符**表示项目级配置,从项目的 CLAUDE.md 解析,统一存放在固定节 `## Maestro Configuration`:
+  - **纯配置,无散文**:节内只有 `{{VAR}} = value` 定义行和固定子节(如 `### Version Bump Locations` 表)。
+  - **共享变量只定义一次**:被多个 skill 消费的变量(如 `{{AI_MODEL_NAME}}`)平铺在节顶,不按 skill 重复定义。
+  - **固定变量名清单**:`{{AI_MODEL_NAME}}`、`{{AI_MODEL_EMAIL}}`、`{{REPO_URL}}`、`{{PACKAGE_NAME}}`(`none` = 无 Python 包工程)。
+  - **只放配置,不放注入的文档规则**:spec 注入的 SDD 规则属于文档,保留自己的章节(`## Spec Maintenance`),不进 `## Maestro Configuration`。
+  - **演进路径**:出现机械消费者(脚本/hook/CI)或配置量膨胀时,迁移到独立 `maestro.toml` 文件,并升大版本。
+- **以 `## Bootstrap (First Use in a New Project)` 结尾**——首次使用自动配置:grep 项目 CLAUDE.md 的 `## Maestro Configuration` 节查找自己的变量,缺失则节内追加自己的配置块,并汇报检测结果;变量在节外找到(旧格式)则使用其值并提示合并。要有 degraded mode——绝不因缺配置而卡死。
+- **以 `## Required Configuration` 结尾**——列出 skill 消费的每个变量,并注明存放在 `## Maestro Configuration` 节。
 
 ## 新增一个 skill:流程
 
