@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Release skill supports bare `VERSION` files**: added to the typical version-bump patterns and Bootstrap detection (grep version locations in `pyproject.toml` / `<package>/`, or a bare `VERSION` file), covering projects that version via a single-line `VERSION` file.
+
+### Changed
+
+- **Commit/release skills aligned with strict Keep a Changelog**: the custom `### Docs` subsection is dropped — `docs:` commits now skip CHANGELOG unless user-visible (then `### Changed`); `### Deprecated` added; subsection order follows the spec's six types (Added → Changed → Deprecated → Removed → Fixed → Security). CLAUDE.md and docs/ synced. Existing `### Docs` sections in released history and the current Unreleased entries stay as-is.
+
 ### Docs
 
 - **Per-plugin versioning and release rules adopted**: this repository no longer has a repo-level version — each plugin versions independently (`maestro` evolves on its own sequence; `dataflow` mirrors the dataflow-cv version it documents). CHANGELOG headers are plugin-scoped (`## [<plugin>-X.Y.Z]`), tags are plugin-prefixed (`<plugin>--vX.Y.Z`), and GitHub Releases are per plugin. Full rules: `docs/release-versioning.md`.

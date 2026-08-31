@@ -30,6 +30,7 @@ Update **all** version locations configured for this project. See CLAUDE.md for 
 |---------|-------------|-------|
 | Package init | `{{PACKAGE_NAME}}/__init__.py` | `__version__ = "X.Y.Z"` |
 | Project config | `pyproject.toml` | `version = "X.Y.Z"` |
+| Version file | `VERSION` | `X.Y.Z` (bare string, no field syntax) |
 | Changelog | `CHANGELOG.md` | Rename `## [Unreleased]` → `## [X.Y.Z] - YYYY-MM-DD`, then add a fresh empty `## [Unreleased]` at the top |
 
 The `{{PACKAGE_NAME}}` variable is defined in CLAUDE.md.
@@ -79,7 +80,7 @@ Go to the repository's Releases page, select tag `vX.Y.Z`, and fill in:
 Body template:
 
 ```markdown
-<CHANGELOG.md [X.Y.Z] section content, including ### Added/Changed/Fixed/Docs headings>
+<CHANGELOG.md [X.Y.Z] section content, including ### Added/Changed/Deprecated/Removed/Fixed/Security headings>
 
 ---
 
@@ -93,7 +94,7 @@ Body template:
 This skill reads its configuration from the project's CLAUDE.md. On first use in a project:
 
 1. Grep CLAUDE.md for `{{AI_MODEL_NAME}}`, `{{AI_MODEL_EMAIL}}`, `{{PACKAGE_NAME}}`, `{{REPO_URL}}` definition lines and a version bump locations table.
-2. If missing, detect what you can from the project (`git remote get-url origin` for the repo URL, `pyproject.toml` for the package, `grep -rn 'X.Y.Z' pyproject.toml <package>/` for version locations), append the section below to CLAUDE.md, and tell the user what was detected.
+2. If missing, detect what you can from the project (`git remote get-url origin` for the repo URL, `pyproject.toml` for the package, `grep -rn 'X.Y.Z' pyproject.toml <package>/` or a bare `VERSION` file for version locations), append the section below to CLAUDE.md, and tell the user what was detected.
 3. If present, use the existing values unchanged.
 
 ```markdown

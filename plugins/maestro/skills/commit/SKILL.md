@@ -63,16 +63,17 @@ If the file exists but has no `[Unreleased]` section, create it above the most r
 | `feat` | `### Added` |
 | `fix` (security) | `### Security` |
 | `fix` | `### Fixed` |
-| `docs` | `### Docs` |
+| Deprecation (any commit type marking a feature/API as deprecated) | `### Deprecated` |
 | `chore` | `### Changed` |
 
-Entry style follows the existing changelog: `- **Bold summary**: description.` One line per logical change; closely related changes may share one entry. Order subsections as Added → Changed → Fixed → Removed → Security → Docs.
+Entry style follows the existing changelog: `- **Bold summary**: description.` One line per logical change; closely related changes may share one entry. Order subsections as Added → Changed → Deprecated → Removed → Fixed → Security — the Keep a Changelog spec's six section types, in spec order.
 
 **Breaking changes** (`feat!` / `fix!` / `BREAKING CHANGE` in the commit body, or any change that breaks users regardless of type) **must** be explicitly marked: append `(breaking)` to the entry, e.g. `- **Async is one deployment shape** (breaking): ...`. The release skill reads these markers to decide the MAJOR version bump.
 
 **Skip CHANGELOG for:**
 - `test` / `ci` / `build` / `style` commits — internal housekeeping with no user-visible effect
 - Pure-internal `refactor` / `perf` commits — if a refactor/perf change IS user-visible (significant speedup, behavior adjustment), record it under `### Changed`
+- `docs` commits — pure documentation changes (Keep a Changelog records noteworthy end-user differences, not doc-only noise). If a docs change IS user-visible (new guide, install instructions, README restructuring), record it under `### Changed`
 - Version bump commits (`chore: bump version to X.Y.Z`) — the release skill renames the Unreleased section at release time
 - Commits that only modify `CHANGELOG.md` itself
 

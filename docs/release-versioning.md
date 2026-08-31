@@ -18,7 +18,7 @@
 ## 发布流程(按插件)
 
 1. **bump** 该插件的 `plugins/<plugin>/plugin.json` 版本(交付闸门:不 bump 则 `/plugin update` 跳过,用户永远收不到变更)
-2. **写 CHANGELOG**:在 `CHANGELOG.md` 中新增版本头 `## [<plugin>-X.Y.Z] - YYYY-MM-DD`,下方按 Added → Changed → Fixed → Removed → Security → Docs 顺序写条目;版本号与 plugin.json 一致
+2. **写 CHANGELOG**:在 `CHANGELOG.md` 中新增版本头 `## [<plugin>-X.Y.Z] - YYYY-MM-DD`,下方按 Added → Changed → Deprecated → Removed → Fixed → Security 顺序写条目;版本号与 plugin.json 一致
 3. **打 tag**:`claude plugin tag plugins/<plugin> --push` —— 生成工具原生的 `{name}--v{version}` 格式(如 `dataflow--v2.0.1`),并校验 `plugin.json` 与 marketplace 条目一致(也可手工 `git tag <plugin>--vX.Y.Z`)
 4. **发 GitHub Release**:标题 `<plugin> vX.Y.Z: <一句话摘要>`,正文 = CHANGELOG 对应章节 + 末尾引用链接
 
