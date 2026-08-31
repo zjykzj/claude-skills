@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-3.0.2] - 2026-08-31
+
 ### Added
 
 - **Release skill supports bare `VERSION` files**: added to the typical version-bump patterns and Bootstrap detection (grep version locations in `pyproject.toml` / `<package>/`, or a bare `VERSION` file), covering projects that version via a single-line `VERSION` file.
 
 ### Changed
 
-- **Commit/release skills aligned with strict Keep a Changelog**: the custom `### Docs` subsection is dropped — `docs:` commits now skip CHANGELOG unless user-visible (then `### Changed`); `### Deprecated` added; subsection order follows the spec's six types (Added → Changed → Deprecated → Removed → Fixed → Security). CLAUDE.md and docs/ synced. Existing `### Docs` sections in released history and the current Unreleased entries stay as-is.
+- **Commit/release skills aligned with strict Keep a Changelog**: the custom `### Docs` subsection is dropped — `docs:` commits now skip CHANGELOG unless user-visible (then `### Changed`); `### Deprecated` added; subsection order follows the spec's six types (Added → Changed → Deprecated → Removed → Fixed → Security). CLAUDE.md and docs/ synced. Legacy `### Docs` sections in released history stay; the two entries below ship unchanged in this release.
 
 ### Docs
 
