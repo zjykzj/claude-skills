@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.2.0] - 2026-10-10
+
 ### Added
 
 - **Dual co-author attribution in commit trailers**: every commit now ends with two `Co-Authored-By` lines — the AI model and the agent tool (`Claude Code <noreply@anthropic.com>`) — documenting both the LLM and the agent that produced the commit. The commit and release skills both emit the two-line format.
