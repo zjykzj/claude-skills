@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Create git commits following project conventions. Use when committing code or preparing a commit message, and whenever the user asks anything about commit conventions — the commit message format, Conventional Commit type classification, the mandatory Co-Authored-By line, or CHANGELOG maintenance rules (subsections, breaking-change marking, what to skip) — even if they only ask a question rather than request a commit.
+description: Create git commits following project conventions. Use when committing code or preparing a commit message, and whenever the user asks anything about commit conventions — the commit message format, Conventional Commit type classification, the mandatory Co-Authored-By lines, or CHANGELOG maintenance rules (subsections, breaking-change marking, what to skip) — even if they only ask a question rather than request a commit.
 allowed-tools: Bash, Read, Edit, Write
 ---
 
@@ -19,11 +19,12 @@ git commit -m "$(cat <<'EOF'
 <body if needed>
 
 Co-Authored-By: {{AI_MODEL_NAME}} <{{AI_MODEL_EMAIL}}>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
 EOF
 )"
 ```
 
-The `Co-Authored-By` line is **mandatory** for all commits. `{{AI_MODEL_NAME}}` and `{{AI_MODEL_EMAIL}}` are configured per-project in the `## Maestro Configuration` section of CLAUDE.md.
+The two `Co-Authored-By` lines are **mandatory** for all commits: the AI model (`{{AI_MODEL_NAME}} <{{AI_MODEL_EMAIL}}>`, configured per-project in the `## Maestro Configuration` section of CLAUDE.md) and the agent tool (`Claude Code <noreply@anthropic.com>`, fixed — the plugin only runs inside Claude Code).
 
 ## Conventional Commit Types
 
@@ -79,7 +80,7 @@ The CHANGELOG edit is part of the **same commit** as the code change — never a
 2. Write a concise subject line (imperative mood, ≤50 chars)
 3. Write the commit body if the change needs explanation — engineering detail (root cause, measurements, trade-offs, test names) lives here
 4. Derive the CHANGELOG entry from the body — the user-facing summary of the same change, bounded as above; do not duplicate the body (see CHANGELOG Maintenance)
-5. Append the `Co-Authored-By` line
+5. Append the two `Co-Authored-By` lines — AI model first, then agent tool
 6. Stage the CHANGELOG edit together with the code changes and execute the commit command
 
 ## Bootstrap (First Use in a New Project)
@@ -95,7 +96,7 @@ Configuration lives in the unified `## Maestro Configuration` section of the pro
 {{AI_MODEL_EMAIL}} = <model-email>
 ```
 
-**Degraded mode**: if configuration cannot be added (user declines, no CLAUDE.md), proceed using `Claude <noreply@anthropic.com>` as the co-author and tell the user what was assumed. Never fail the commit over missing configuration.
+**Degraded mode**: if configuration cannot be added (user declines, no CLAUDE.md), proceed using `Claude <noreply@anthropic.com>` for the model line (the agent-tool line is fixed) and tell the user what was assumed. Never fail the commit over missing configuration.
 
 ## Required Configuration
 
@@ -103,5 +104,5 @@ Defined in the project's CLAUDE.md, `## Maestro Configuration` section (unified 
 
 | Variable | Purpose | Example |
 |----------|---------|---------|
-| `{{AI_MODEL_NAME}}` | `Co-Authored-By` name | `DeepSeek-V4-Pro` |
-| `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` email | `noreply@deepseek.com` |
+| `{{AI_MODEL_NAME}}` | `Co-Authored-By` model name | `DeepSeek-V4-Pro` |
+| `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` model email | `noreply@deepseek.com` |

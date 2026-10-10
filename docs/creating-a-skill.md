@@ -69,7 +69,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 3. 本地测试:`claude --plugin-dir plugins/maestro`,然后在会话内调用 `/maestro:<name>`。
 4. bump `plugins/maestro/plugin.json` 的 `version` —— **强制**。`/plugin update` 会跳过版本没变的插件,不 bump 就没有任何用户能收到新 skill。
 5. 在同一个 commit 里更新 CHANGELOG 的 `[Unreleased]`(小节选择、跳过清单、条目长度上限等细则以 `/maestro:commit` 为准;breaking change 标 `(breaking)`)。
-6. 用 `/maestro:commit` 提交(conventional commit + 强制 `Co-Authored-By` 行)。
+6. 用 `/maestro:commit` 提交(conventional commit + 强制双行 `Co-Authored-By`:AI 模型 + 代理工具)。
 
 重载行为:`SKILL.md` 改动会话内 hot-reload;`hooks/` 或 `plugin.json` 改动需要 `/reload-plugins`。
 

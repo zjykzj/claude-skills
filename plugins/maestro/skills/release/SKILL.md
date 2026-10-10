@@ -48,6 +48,7 @@ chore: bump version to X.Y.Z
 <CHANGELOG.md [X.Y.Z] section content, omitting the ### headers>
 
 Co-Authored-By: {{AI_MODEL_NAME}} <{{AI_MODEL_EMAIL}}>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
 EOF
 )"
 ```
@@ -122,7 +123,7 @@ Defined in the project's CLAUDE.md, `## Maestro Configuration` section (unified 
 
 | Item | Purpose | Example |
 |------|---------|---------|
-| `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` line in bump commit | `DeepSeek-V4-Pro` / `noreply@deepseek.com` |
+| `{{AI_MODEL_NAME}}` / `{{AI_MODEL_EMAIL}}` | `Co-Authored-By` model line in bump commit; the agent-tool line is fixed to `Claude Code <noreply@anthropic.com>` | `DeepSeek-V4-Pro` / `noreply@deepseek.com` |
 | `{{PACKAGE_NAME}}` | Locate `__init__.py` version field; `none` for projects without a Python package | `dataflow` |
 | `{{REPO_URL}}` | CHANGELOG citation link in Release body | `https://github.com/owner/repo` |
 | Version bump locations table | Which files carry the version string | `### Version Bump Locations` subsection of `## Maestro Configuration` |
