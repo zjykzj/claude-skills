@@ -1,6 +1,6 @@
 ---
 name: release
-description: Bump the project version and publish a GitHub release. Use when releasing a new version, and whenever the user asks anything about the release process — which semver bump to pick from the commit history, version bump locations, the release commit message format, tagging and pushing the release, or renaming the CHANGELOG [Unreleased] section — even if they only ask a question rather than request a release.
+description: Bump the project version and publish a GitHub release in two phases: local (bump, commit, tag) then optional remote (push, GitHub release). Use when releasing a new version — locally or published — and whenever the user asks anything about the release process — which semver bump to pick from the commit history, version bump locations, the release commit message format, tagging and pushing the release, local-only releases, or renaming the CHANGELOG [Unreleased] section — even if they only ask a question rather than request a release.
 allowed-tools: Bash, Read, Edit, Grep, Write
 ---
 
@@ -8,7 +8,11 @@ allowed-tools: Bash, Read, Edit, Grep, Write
 
 Use this skill when bumping the project version and publishing a GitHub release.
 
-## Step 0: Determine Version Number
+The release has two phases: **Phase A — Local** (Steps 0-3: determine, bump, commit, tag) needs no network access and always runs; **Phase B — Remote** (Steps 4-5: push, GitHub release) runs only after an explicit user choice at the gate between the phases. Phase B can also run standalone later, after a local-only release.
+
+## Phase A — Local
+
+### Step 0: Determine Version Number
 
 Review `git log` since the last tag. Classify each commit's conventional commit type into semver:
 
@@ -22,7 +26,7 @@ Review `git log` since the last tag. Classify each commit's conventional commit 
 
 **Concrete check:** before picking a version, look at the `## [Unreleased]` section you're about to rename. If `### Added` is empty (no new features) → PATCH. If any entry is marked `(breaking)` → MAJOR.
 
-## Step 1: Bump Version
+### Step 1: Bump Version
 
 Update **all** version locations configured for this project. See the `### Version Bump Locations` table in the `## Maestro Configuration` section of CLAUDE.md for the exact file paths — typical patterns include:
 
@@ -37,7 +41,7 @@ The `{{PACKAGE_NAME}}` variable is defined in CLAUDE.md — `none` for projects 
 
 **CHANGELOG rename, not rewrite**: the commit skill maintains `## [Unreleased]` on every commit, so the release does not write new entries. Rename the section header and reset it — the section content flows unchanged into the version bump commit (Step 2) and the GitHub Release body (Step 5).
 
-## Step 2: Commit
+### Step 2: Commit
 
 Use the version bump commit format — body **must** include the relevant section from `CHANGELOG.md`:
 
@@ -55,23 +59,41 @@ EOF
 
 This ensures `git log --oneline --no-decorator` provides enough context to understand each release's contents without opening `CHANGELOG.md`.
 
-## Step 3: Tag
+### Step 3: Tag (Local)
 
-Create an annotated tag with a minimal message:
+Create an annotated tag locally with a minimal message — do not push:
 
 ```bash
 git tag -a vX.Y.Z -m "vX.Y.Z"
 ```
 
-In plugin-marketplace repos with per-plugin versioning (like this one), use the tool-native tag instead: `claude plugin tag plugins/<plugin> --push` — it generates the `<plugin>--vX.Y.Z` format and validates the manifest.
+In plugin-marketplace repos with per-plugin versioning (like this one), use the tool-native tag instead: `claude plugin tag plugins/<plugin>` (without `--push`) — it generates the `<plugin>--vX.Y.Z` format and validates the manifest.
 
-## Step 4: Push
+## Gate: Local or Remote?
+
+After Phase A completes, **always pause and ask the user how to proceed** — regardless of permission mode (including auto/acceptEdits). Pushing and publishing are outward-facing and hard to reverse, and the user's environment may be offline; the local phase must never auto-continue into remote actions. Use AskUserQuestion:
+
+| Option | Action |
+|--------|--------|
+| Push and publish | Run Phase B, Steps 4-5 |
+| Push only | Run Step 4, skip Step 5 |
+| Local only | Stop here — Phase B can run later from the gate |
+
+**Phase B runs standalone**: if the bump commit and tag already exist from a previous local-only release, skip Phase A and start directly at the gate.
+
+## Phase B — Remote
+
+Runs only for "Push and publish" or "Push only".
+
+### Step 4: Push
 
 ```bash
 git push && git push --tags
 ```
 
-## Step 5: Create GitHub Release
+For plugin-marketplace repos that tagged with `claude plugin tag plugins/<plugin>` in Step 3, push the tag by re-running it with `--push` instead of `git push --tags`. If the push fails (e.g. no network), Phase A's work stays intact — retry Phase B later.
+
+### Step 5: Create GitHub Release
 
 Go to the repository's Releases page, select tag `vX.Y.Z`, and fill in:
 

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Dual co-author attribution in commit trailers**: every commit now ends with two `Co-Authored-By` lines — the AI model and the agent tool (`Claude Code <noreply@anthropic.com>`) — documenting both the LLM and the agent that produced the commit. The commit and release skills both emit the two-line format.
 
+### Changed
+
+- **Release split into local and remote phases with an explicit gate**: the release skill now completes the version bump, commit, and local tag first (Phase A), then always asks — regardless of permission mode — whether to push and publish, push only, or stop local-only (Phase B). Local-only releases work offline, and Phase B can run standalone later, so releases no longer fail mid-flow or auto-publish when the network is unavailable.
+
 ## [maestro-4.1.0] - 2026-10-10
 
 ### Added
