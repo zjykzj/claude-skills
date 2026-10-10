@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.1.0] - 2026-10-10
+
 ### Added
 
 - **Commit skill CHANGELOG rules consolidated**: one decision table now maps every commit type to its CHANGELOG fate with a single "user-visible" skip rule (replacing the mapping table + skip list), and entries are bounded to ~3 sentences — what changed and why it matters to the user, with engineering detail staying in the commit body. The release skill's semver table gained `perf:` and its breaking row matches the commit skill's definition; both skills can now create missing files.
