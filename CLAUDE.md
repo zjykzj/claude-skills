@@ -11,7 +11,7 @@ claude-skills is a Claude Code plugin marketplace hosting two plugins, distribut
 - **Skills live in** `plugins/<plugin>/skills/<name>/SKILL.md`; each skill ends with "Bootstrap" (first-use config auto-setup) and "Required Configuration" sections
 - **Version gates updates**: every user-facing change bumps `version` in `plugins/maestro/plugin.json`, otherwise users never receive the change (`/plugin update` skips unchanged versions)
 - **Per-plugin versioning**: this repo has no repo-level version — each plugin versions and releases independently (plugin-scoped CHANGELOG headers, `<plugin>--vX.Y.Z` tags, per-plugin GitHub Releases); the release flow lives in `docs/release-versioning.md`
-- **CHANGELOG discipline**: every user-facing commit updates the `[Unreleased]` section in the same commit; subsections are the six Keep a Changelog types in spec order — Added → Changed → Deprecated → Removed → Fixed → Security; `docs:` commits skip CHANGELOG unless user-visible (then `### Changed`); breaking changes marked `(breaking)`
+- **CHANGELOG discipline**: every user-facing commit updates the `[Unreleased]` section in the same commit; breaking changes marked `(breaking)`. Full rules — type→subsection mapping, skip list, entry length bound — are authoritative in `/maestro:commit`; CLAUDE.md keeps only the invariants
 - **Validate before commit**: `claude plugin validate .`
 - **Test locally**: `claude --plugin-dir plugins/maestro` loads the plugin without installing
 - **Skill development & optimization**: new skills and optimizations follow the evaluation-driven methodology in `docs/creating-a-skill.md` (description trigger optimization + behavioral eval loop, per the official `skill-creator` plugin)

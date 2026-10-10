@@ -1,7 +1,7 @@
 ---
 name: commit
 description: Create git commits following project conventions. Use when committing code or preparing a commit message, and whenever the user asks anything about commit conventions — the commit message format, Conventional Commit type classification, the mandatory Co-Authored-By line, or CHANGELOG maintenance rules (subsections, breaking-change marking, what to skip) — even if they only ask a question rather than request a commit.
-allowed-tools: Bash, Read, Edit
+allowed-tools: Bash, Read, Edit, Write
 ---
 
 # Git Commit Skill
@@ -55,36 +55,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ```
 
-If the file exists but has no `[Unreleased]` section, create it above the most recent `## [X.Y.Z]` section. Then add the entry under it, in the subsection matching the commit type:
+If the file exists but has no `[Unreleased]` section, create it above the most recent `## [X.Y.Z]` section. One decision table covers every commit type:
 
-| Commit Type | CHANGELOG Subsection |
-|-------------|----------------------|
-| `feat` (removing features/APIs) | `### Removed` |
-| `feat` | `### Added` |
-| `fix` (security) | `### Security` |
-| `fix` | `### Fixed` |
+| Commit Type | CHANGELOG Entry |
+|-------------|-----------------|
+| `feat` | `### Added`; removing features/APIs → `### Removed` |
+| `fix` | `### Fixed`; security fix → `### Security` |
 | Deprecation (any commit type marking a feature/API as deprecated) | `### Deprecated` |
-| `chore` | `### Changed` |
+| `chore` / `refactor` / `perf` / `docs` — user-visible only | `### Changed` |
+| `test` / `ci` / `build` / `style`; anything with no user-visible difference | none — skip |
 
-Entry style follows the existing changelog: `- **Bold summary**: description.` One line per logical change; closely related changes may share one entry. Order subsections as Added → Changed → Deprecated → Removed → Fixed → Security — the Keep a Changelog spec's six section types, in spec order.
+Rule of thumb: **no user-visible difference → no entry**. This covers pure-internal refactors, doc-only edits, version bump commits (the release skill renames the `[Unreleased]` section at release time) and commits that only modify `CHANGELOG.md`.
+
+**Entry format, bounded**: `- **Bold summary**: description.` — at most ~3 sentences covering **what changed** and **why it matters to the user**. Root cause, measurements, test names and trade-offs belong in the commit body, never here. One entry per logical change; closely related changes may share one entry. Follow the existing *format*, not the existing *length*. Order subsections Added → Changed → Deprecated → Removed → Fixed → Security — the Keep a Changelog spec's six section types, in spec order.
 
 **Breaking changes** (`feat!` / `fix!` / `BREAKING CHANGE` in the commit body, or any change that breaks users regardless of type) **must** be explicitly marked: append `(breaking)` to the entry, e.g. `- **Async is one deployment shape** (breaking): ...`. The release skill reads these markers to decide the MAJOR version bump.
-
-**Skip CHANGELOG for:**
-- `test` / `ci` / `build` / `style` commits — internal housekeeping with no user-visible effect
-- Pure-internal `refactor` / `perf` commits — if a refactor/perf change IS user-visible (significant speedup, behavior adjustment), record it under `### Changed`
-- `docs` commits — pure documentation changes (Keep a Changelog records noteworthy end-user differences, not doc-only noise). If a docs change IS user-visible (new guide, install instructions, README restructuring), record it under `### Changed`
-- Version bump commits (`chore: bump version to X.Y.Z`) — the release skill renames the Unreleased section at release time
-- Commits that only modify `CHANGELOG.md` itself
 
 The CHANGELOG edit is part of the **same commit** as the code change — never a separate commit.
 
 ## Procedure
 
 1. Review the diff to determine the appropriate type and scope
-2. Update `CHANGELOG.md` (see CHANGELOG Maintenance above)
-3. Write a concise subject line (imperative mood, ≤50 chars)
-4. Add body if the change needs explanation
+2. Write a concise subject line (imperative mood, ≤50 chars)
+3. Write the commit body if the change needs explanation — engineering detail (root cause, measurements, trade-offs, test names) lives here
+4. Derive the CHANGELOG entry from the body — the user-facing summary of the same change, bounded as above; do not duplicate the body (see CHANGELOG Maintenance)
 5. Append the `Co-Authored-By` line
 6. Stage the CHANGELOG edit together with the code changes and execute the commit command
 

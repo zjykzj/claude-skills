@@ -1,7 +1,7 @@
 ---
 name: release
 description: Bump the project version and publish a GitHub release. Use when releasing a new version, and whenever the user asks anything about the release process — which semver bump to pick from the commit history, version bump locations, the release commit message format, tagging and pushing the release, or renaming the CHANGELOG [Unreleased] section — even if they only ask a question rather than request a release.
-allowed-tools: Bash, Read, Edit, Grep
+allowed-tools: Bash, Read, Edit, Grep, Write
 ---
 
 # Release Skill
@@ -14,9 +14,9 @@ Review `git log` since the last tag. Classify each commit's conventional commit 
 
 | Commit Type(s) | Semver | Example |
 |---------------|--------|---------|
-| `fix:`, `docs:`, `refactor:`, `style:`, `chore:`, `test:`, `ci:`, `build:` | **PATCH** (1.6.1 → 1.6.2) | Bug fix, doc update, internal restructure |
+| `fix:`, `docs:`, `refactor:`, `style:`, `perf:`, `chore:`, `test:`, `ci:`, `build:` | **PATCH** (1.6.1 → 1.6.2) | Bug fix, doc update, internal restructure |
 | `feat:` | **MINOR** (1.6.2 → 1.7.0) | New public API, new CLI flag, new feature |
-| `feat!:` or `BREAKING CHANGE` in commit body | **MAJOR** (1.7.0 → 2.0.0) | Remove public API, change default behavior |
+| `feat!:` / `fix!:` or `BREAKING CHANGE` in the commit body | **MAJOR** (1.7.0 → 2.0.0) | Remove public API, change default behavior |
 
 **Rule:** the highest-severity commit wins. If all commits are `docs`/`refactor`/`chore` → PATCH. If any `feat` → MINOR. If any breaking change → MAJOR.
 
@@ -61,6 +61,8 @@ Create an annotated tag with a minimal message:
 ```bash
 git tag -a vX.Y.Z -m "vX.Y.Z"
 ```
+
+In plugin-marketplace repos with per-plugin versioning (like this one), use the tool-native tag instead: `claude plugin tag plugins/<plugin> --push` — it generates the `<plugin>--vX.Y.Z` format and validates the manifest.
 
 ## Step 4: Push
 
