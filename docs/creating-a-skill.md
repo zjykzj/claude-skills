@@ -77,6 +77,15 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 
 写完只是开始,不是终点。官方 `skill-creator` 插件(安装:`/plugin install skill-creator@anthropics/claude-plugins-official`)定义了优化方法论——评测驱动,分两条线。工具本身的完整学习指南见 [skill-creator.md](skill-creator.md):
 
+**何时需要跑评测**——评测有成本,不是每次改动都值得跑完整循环;发布前不需要固定过一遍 skill-creator,按改动类型判断:
+
+| 改动 | 是否跑 eval | 原因 |
+|------|------------|------|
+| 新建 skill | 必须 | 初版 description 召回率通常不足一半,必须优化 |
+| description 实质改写/收窄语义 | 必须 | 可能丢触发场景(召回回归) |
+| description 纯增补触发词 | 可不跑 | 只多触发不漏触发,且多触发仍在主题内 |
+| 正文流程改动(模板、步骤、约定) | 不需要 | 与触发无关,靠本地测试(`claude --plugin-dir plugins/maestro`)验证 |
+
 ### 线 1:description 优化(触发准确率)
 
 frontmatter 的 `description` 是首要触发信号,而模型天生欠触发 skill。用触发评测集来优化它:
