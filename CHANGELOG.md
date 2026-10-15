@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **CHANGELOG entry bounds are now mechanically enforced**: a PreToolUse hook ships with the commit skill (`skills/commit/scripts/changelog-bound-check.sh`) and blocks any Edit/Write to CHANGELOG.md that introduces a bullet over the bound, naming the offending lines — the discipline no longer depends on the model re-reading prose rules.
+
+### Changed
+
+- **Commit skill entry rules gain a hard bound and a legacy clause**: entries are now one physical line / ≤3 sentences / ≤400 characters (replacing the prose-only "~3 sentences"), and essay-length legacy entries are declared non-precedent — their presence signals a stale plugin snapshot, so point the user at `/plugin update`.
+
 ## [maestro-4.2.0] - 2026-10-10
 
 ### Added

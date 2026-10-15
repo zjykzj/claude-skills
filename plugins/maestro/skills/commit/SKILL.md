@@ -68,7 +68,9 @@ If the file exists but has no `[Unreleased]` section, create it above the most r
 
 Rule of thumb: **no user-visible difference → no entry**. This covers pure-internal refactors, doc-only edits, version bump commits (the release skill renames the `[Unreleased]` section at release time) and commits that only modify `CHANGELOG.md`.
 
-**Entry format, bounded**: `- **Bold summary**: description.` — at most ~3 sentences covering **what changed** and **why it matters to the user**. Root cause, measurements, test names and trade-offs belong in the commit body, never here. One entry per logical change; closely related changes may share one entry. Follow the existing *format*, not the existing *length*. Order subsections Added → Changed → Deprecated → Removed → Fixed → Security — the Keep a Changelog spec's six section types, in spec order.
+**Entry format, bounded**: `- **Bold summary**: description.` — one physical line, at most ~3 sentences, ≤400 characters, covering **what changed** and **why it matters to the user**. Root cause, measurements, test names and trade-offs belong in the commit body, never here. One entry per logical change; closely related changes may share one entry. Follow the existing *format*, not the existing *length*. Order subsections Added → Changed → Deprecated → Removed → Fixed → Security — the Keep a Changelog spec's six section types, in spec order. The bound is mechanically enforced by the plugin's PreToolUse hook (`skills/commit/scripts/changelog-bound-check.sh`, blocks overlong entries on every CHANGELOG.md edit) — if it blocks, compress the entry and retry.
+
+**Legacy entries are not precedent**: essay-length entries already in the file predate this bound — usually written by a stale pre-4.3.0 plugin snapshot (tell the user `/plugin update` may be due). Never match their length; trim them opportunistically when touching the file.
 
 **Breaking changes** (`feat!` / `fix!` / `BREAKING CHANGE` in the commit body, or any change that breaks users regardless of type) **must** be explicitly marked: append `(breaking)` to the entry, e.g. `- **Async is one deployment shape** (breaking): ...`. The release skill reads these markers to decide the MAJOR version bump.
 
@@ -81,7 +83,8 @@ The CHANGELOG edit is part of the **same commit** as the code change — never a
 3. Write the commit body if the change needs explanation — engineering detail (root cause, measurements, trade-offs, test names) lives here
 4. Derive the CHANGELOG entry from the body — the user-facing summary of the same change, bounded as above; do not duplicate the body (see CHANGELOG Maintenance)
 5. Append the two `Co-Authored-By` lines — AI model first, then agent tool
-6. Stage the CHANGELOG edit together with the code changes and execute the commit command
+6. Verify the CHANGELOG entry stays within the bound (one physical line, ≤3 sentences, ≤400 characters) — the changelog-bound hook already blocks violations on Edit/Write, but re-check the final diff before staging
+7. Stage the CHANGELOG edit together with the code changes and execute the commit command
 
 ## Bootstrap (First Use in a New Project)
 
