@@ -55,8 +55,9 @@ claude plugin validate <path>                   # 校验插件或市场清单
 ### 发布辅助(本仓库维护者)
 
 ```bash
-claude plugin tag plugins/dataflow --push       # 生成 {name}--v{version} 格式 tag(如 dataflow--v2.0.1),
-                                                # 校验 plugin.json 与 marketplace 条目一致后推送
+claude plugin tag plugins/dataflow           # 生成 {name}--v{version} 格式 tag(如 dataflow--v2.0.1),
+                                                # 校验 plugin.json 与 marketplace 条目一致;不带 --push 先落本地
+git push origin refs/tags/dataflow--v2.0.1   # 远程阶段推送(tag 已存在,重跑 --push 会报 "already exists locally")
 ```
 
 ### 会话内等价命令

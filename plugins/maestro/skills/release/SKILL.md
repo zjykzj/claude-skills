@@ -91,7 +91,7 @@ Runs only for "Push and publish" or "Push only".
 git push && git push --tags
 ```
 
-For plugin-marketplace repos that tagged with `claude plugin tag plugins/<plugin>` in Step 3, push the tag by re-running it with `--push` instead of `git push --tags`. If the push fails (e.g. no network), Phase A's work stays intact — retry Phase B later.
+For plugin-marketplace repos that tagged with `claude plugin tag plugins/<plugin>` in Step 3, the tag already exists locally, so re-running the command with `--push` fails with "Tag ... already exists locally". Push the tag with the exact command the tagger prints instead: `git push origin refs/tags/<plugin>--vX.Y.Z` (or `git push --tags`; `--force` is only for moving a wrongly-placed tag). If the push fails (e.g. no network), Phase A's work stays intact — retry Phase B later.
 
 ### Step 5: Create GitHub Release
 
