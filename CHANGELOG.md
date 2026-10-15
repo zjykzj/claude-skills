@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.3.1] - 2026-10-15
+
 ### Fixed
 
 - **Release tag push guidance corrected in the skill and docs**: re-running `claude plugin tag --push` after Phase A fails with "Tag ... already exists locally", so the skill and `docs/release-versioning.md` / `docs/plugin-installation.md` now push the existing tag with `git push origin refs/tags/<plugin>--vX.Y.Z`.
