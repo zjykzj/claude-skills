@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`dataflow-cv` skill rebased to the 3.0.0 surface** (breaking): COCO-source converters now name per-file outputs by the image file stem instead of the numeric id, and the skill's version gate warns below 3.0.0; plugin version mirrors upstream at 3.0.0.
+
 ## [maestro-4.3.2] - 2026-10-15
 
 ### Fixed
