@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.3.2] - 2026-10-15
+
 ### Fixed
 
 - **Plugin manifests moved to the canonical `.claude-plugin/plugin.json`**: Claude Code resolves a plugin's version only from that path, so the previous bare `plugins/<name>/plugin.json` made `claude plugin list` report a commit sha and gated `/plugin update` on the sha instead of the declared version.
