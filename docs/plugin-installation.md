@@ -25,7 +25,7 @@ dataflow@claude-skills
 **安装快照的是市场仓库默认分支当时的 HEAD 提交,不是 GitHub Release,也不是 git tag。**
 
 - 安装记录 `~/.claude/plugins/installed_plugins.json` 中保存了 `gitCommitSha` —— 装的是「此刻的 main」,装完后市场仓库再变也不会影响已安装的插件
-- 版本号 = 该快照中 `plugin.json` 的 `version` 字段
+- 版本号 = 该快照中 `plugins/<plugin>/.claude-plugin/plugin.json` 的 `version` 字段(**清单必须在 `.claude-plugin/` 下**:放在插件根目录的裸 `plugin.json` 仍会被组件加载读取(skills/hooks 照常),但不参与 version 解析 —— CLI 退回把 commit sha 当版本号报告,`/plugin update` 也随之按 sha 门控)
 - GitHub Release 与 tag **不参与安装/更新机制**,纯属变更记录(见 [release-versioning.md](release-versioning.md))
 
 ## 命令速查

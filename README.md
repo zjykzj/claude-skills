@@ -10,7 +10,8 @@ claude-skills/
 │   └── marketplace.json          # Marketplace catalog (one entry per plugin)
 ├── plugins/
 │   ├── maestro/                 # Plugin: maestro
-│   │   ├── plugin.json           # Manifest (name = skill namespace prefix)
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json       # Manifest (name = skill namespace prefix)
 │   │   ├── skills/               # Skills bundled in this plugin
 │   │   │   ├── spec/             #   SDD methodology + enforcement hook script
 │   │   │   ├── commit/           #   commit format + CHANGELOG maintenance
@@ -19,7 +20,8 @@ claude-skills/
 │   │   └── hooks/
 │   │       └── hooks.json        # PreToolUse hook: SDD reminder on specs/ edits
 │   └── dataflow/                # Plugin: dataflow (version mirrors dataflow-cv)
-│       ├── plugin.json           # Manifest (name = skill namespace prefix)
+│       ├── .claude-plugin/
+│       │   └── plugin.json       # Manifest (name = skill namespace prefix)
 │       └── skills/
 │           └── dataflow-cv/      #   dataflow-cv library usage skill
 ```
@@ -55,11 +57,11 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 ## Maintaining this repo
 
-**Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/plugin.json`. Users pick it up with `/plugin update`. See [docs/creating-a-skill.md](docs/creating-a-skill.md) for the skill format and full procedure.
+**Add a skill** to the `maestro` plugin: create `plugins/maestro/skills/<name>/SKILL.md`, then bump `version` in `plugins/maestro/.claude-plugin/plugin.json`. Users pick it up with `/plugin update`. See [docs/creating-a-skill.md](docs/creating-a-skill.md) for the skill format and full procedure.
 
 **Develop or optimize a skill** evaluation-driven: description trigger optimization plus a with/without behavioral eval loop, per the official `skill-creator` plugin (`/plugin install skill-creator@anthropics/claude-plugins-official`). Full methodology in [docs/creating-a-skill.md](docs/creating-a-skill.md).
 
-**Add a plugin**: create `plugins/<name>/` with its own `plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
+**Add a plugin**: create `plugins/<name>/` with its own `.claude-plugin/plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 
 **Release a plugin**: per-plugin versioning — each plugin bumps, tags (`<plugin>--vX.Y.Z`), and releases separately; see [docs/release-versioning.md](docs/release-versioning.md).
 
