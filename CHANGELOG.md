@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [maestro-4.4.1] - 2026-10-25
+
 ### Added
 
 - **Release bump commit bodies are mechanically bounded**: a PreToolUse hook now blocks `git commit` invocations whose version-bump body exceeds 150 words (subject and Co-Authored-By trailers excluded), so the digest budget is enforced by tooling instead of depending on the model re-reading prose rules.
