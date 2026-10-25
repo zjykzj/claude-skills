@@ -8,6 +8,10 @@
 claude-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # 市场目录(每个插件一条)
+├── .github/
+│   └── workflows/
+│       └── plugin-eval.yml        # CI:push 时执行 plugin validate + eval
+├── docs/                          # 指南:技能创建、发布、安装、skill-creator
 ├── plugins/
 │   ├── maestro/                 # 插件:maestro
 │   │   ├── .claude-plugin/
@@ -17,13 +21,16 @@ claude-skills/
 │   │   │   ├── commit/           #   提交格式 + CHANGELOG 维护
 │   │   │   ├── release/          #   版本 bump + GitHub Release
 │   │   │   └── claude/           #   CLAUDE.md 编写,含开发命令文档
+│   │   ├── evals/                # 插件评测套件(claude plugin eval)
 │   │   └── hooks/
 │   │       └── hooks.json        # PreToolUse 钩子:编辑 specs/ 时提醒 SDD
 │   └── dataflow/                # 插件:dataflow(版本镜像 dataflow-cv)
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # 清单(name = 技能命名空间前缀)
-│       └── skills/
-│           └── dataflow-cv/      #   dataflow-cv 库使用技能
+│       ├── skills/
+│       │   └── dataflow-cv/      #   dataflow-cv 库使用技能
+│       └── evals/                # 插件评测套件(claude plugin eval)
+└── README.md / README.zh-CN.md   # 双语 README,同步维护
 ```
 
 ## 安装
@@ -61,6 +68,8 @@ claude plugin install dataflow@claude-skills
 
 **开发或优化技能**采用评测驱动:描述触发优化 + 有/无技能对照的行为评测循环,依据官方 `skill-creator` 插件(`/plugin install skill-creator@anthropics/claude-plugins-official`)。完整方法论见 [docs/creating-a-skill.md](docs/creating-a-skill.md)。
 
+**运行技能评测**:套件位于 `plugins/<plugin>/evals/` —— 本地执行 `claude plugin eval plugins/<plugin>`(每个用例是一次计费的模型调用)。CI(`.github/workflows/plugin-eval.yml`)在 push 到 `plugins/**` 时执行 `claude plugin validate` + `claude plugin eval`(eval job 需要仓库的 `ANTHROPIC_API_KEY` secret)。
+
 **新增插件**:创建 `plugins/<name>/` 目录及各自的 `.claude-plugin/plugin.json`,然后在 `.claude-plugin/marketplace.json` 中添加条目。用户单独安装 —— 插件粒度是逐项目启用/禁用的单位。
 
 **发布插件**:按插件版本化 —— 每个插件各自 bump、打 tag(`<plugin>--vX.Y.Z`)、发 Release;见 [docs/release-versioning.md](docs/release-versioning.md)。
@@ -73,10 +82,11 @@ claude plugin install dataflow@claude-skills
 
 ```bash
 claude plugin validate plugins/maestro          # 清单/schema 校验
+claude plugin eval plugins/maestro              # 运行插件评测套件(按模型调用计费)
 claude --plugin-dir plugins/maestro             # 直接加载,无需安装
 ```
 
-修改后执行 `/reload-plugins`;`SKILL.md` 的改动会话内热加载,但 `hooks/` 或 `plugin.json` 的改动需要 reload。
+修改后执行 `/reload-plugins`;`SKILL.md` 的改动会话内热加载,但 `hooks/` 或 `plugin.json` 的改动需要 reload。评测结果写入 `plugins/<plugin>/evals/results/`(已 gitignore)。
 
 ## License
 

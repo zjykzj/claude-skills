@@ -8,6 +8,10 @@ A [Claude Code](https://code.claude.com/docs) plugin marketplace hosting reusabl
 claude-skills/
 ├── .claude-plugin/
 │   └── marketplace.json          # Marketplace catalog (one entry per plugin)
+├── .github/
+│   └── workflows/
+│       └── plugin-eval.yml        # CI: plugin validate + eval on push
+├── docs/                          # Guides: skill creation, releases, installation, skill-creator
 ├── plugins/
 │   ├── maestro/                 # Plugin: maestro
 │   │   ├── .claude-plugin/
@@ -17,13 +21,16 @@ claude-skills/
 │   │   │   ├── commit/           #   commit format + CHANGELOG maintenance
 │   │   │   ├── release/          #   version bump + GitHub release
 │   │   │   └── claude/           #   CLAUDE.md authoring, incl. development-command docs
+│   │   ├── evals/                # Plugin eval suites (claude plugin eval)
 │   │   └── hooks/
 │   │       └── hooks.json        # PreToolUse hook: SDD reminder on specs/ edits
 │   └── dataflow/                # Plugin: dataflow (version mirrors dataflow-cv)
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # Manifest (name = skill namespace prefix)
-│       └── skills/
-│           └── dataflow-cv/      #   dataflow-cv library usage skill
+│       ├── skills/
+│       │   └── dataflow-cv/      #   dataflow-cv library usage skill
+│       └── evals/                # Plugin eval suites (claude plugin eval)
+└── README.md / README.zh-CN.md   # Bilingual READMEs, kept in sync
 ```
 
 ## Installation
@@ -61,6 +68,8 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 **Develop or optimize a skill** evaluation-driven: description trigger optimization plus a with/without behavioral eval loop, per the official `skill-creator` plugin (`/plugin install skill-creator@anthropics/claude-plugins-official`). Full methodology in [docs/creating-a-skill.md](docs/creating-a-skill.md).
 
+**Run skill evals**: suites live in `plugins/<plugin>/evals/` — run `claude plugin eval plugins/<plugin>` locally (each case is a billed model call). CI (`.github/workflows/plugin-eval.yml`) runs `claude plugin validate` + `claude plugin eval` on push to `plugins/**` (the eval job needs the `ANTHROPIC_API_KEY` repo secret).
+
 **Add a plugin**: create `plugins/<name>/` with its own `.claude-plugin/plugin.json`, then add an entry to `.claude-plugin/marketplace.json`. Users install it separately — plugin granularity is the unit of per-project enable/disable.
 
 **Release a plugin**: per-plugin versioning — each plugin bumps, tags (`<plugin>--vX.Y.Z`), and releases separately; see [docs/release-versioning.md](docs/release-versioning.md).
@@ -73,10 +82,11 @@ These skills are **auxiliary tools**. A project develops fine without them:
 
 ```bash
 claude plugin validate plugins/maestro          # Manifest/schema check
+claude plugin eval plugins/maestro              # Run the plugin's eval suites (billed model calls)
 claude --plugin-dir plugins/maestro             # Load directly without install
 ```
 
-Run `/reload-plugins` after edits; `SKILL.md` changes hot-reload in-session, but changes to `hooks/` or `plugin.json` need a reload.
+Run `/reload-plugins` after edits; `SKILL.md` changes hot-reload in-session, but changes to `hooks/` or `plugin.json` need a reload. Eval results land in `plugins/<plugin>/evals/results/` (gitignored).
 
 ## License
 
