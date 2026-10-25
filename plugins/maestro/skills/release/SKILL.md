@@ -62,7 +62,7 @@ EOF
 )"
 ```
 
-**Digest selection rules** (cap the Highlights list at 6 bullets; when more candidates exist, keep the most user-visible):
+**Digest selection rules** (cap the Highlights list at 6 bullets; when more candidates exist, keep the most user-visible — `(breaking)` entries are exempt and must all be included):
 
 | Include | Skip |
 |---------|------|
@@ -70,6 +70,24 @@ EOF
 | New user-facing features (`### Added`) | Internal refactors and optimization details |
 | Default-behavior changes (affect existing users) | Recipe transcriptions ("records ... values") |
 | 1-2 representative performance numbers | Docs reorganization entries |
+
+**Worked example** — a 31-entry section (flash-yolo 0.7.0) compresses to:
+
+```text
+0.7.0 completes end-to-end segmentation training: YOLO26-seg and
+Flash-YOLO-seg now train, validate, export and eval from COCO polygons.
+
+Highlights:
+- Seg verified against official weights (box 39.67 / mask 33.67 mAP50-95)
+- Fine-tuning from a different class count (O365 365-class → COCO 80)
+- mask_ratio=1 mask-loss peak: 12.0 → 1.1 GB
+- Default MuSGD blend changed to 0.2/1.0 (official recipes keep their
+  per-scale values)
+
+Full release notes: CHANGELOG.md
+```
+
+Twenty-five `### Added` entries collapse into two representative bullets; the default-behavior change stays because it affects existing users; the memory fix contributes one number. Recipe transcriptions and docs-reorganization entries are skipped entirely.
 
 The digest budget is mechanically enforced: a PreToolUse hook (`skills/release/scripts/digest-check.sh`) blocks `git commit` invocations whose bump body exceeds 150 words.
 
