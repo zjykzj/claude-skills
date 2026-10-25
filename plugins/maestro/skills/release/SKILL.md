@@ -71,6 +71,8 @@ EOF
 | Default-behavior changes (affect existing users) | Recipe transcriptions ("records ... values") |
 | 1-2 representative performance numbers | Docs reorganization entries |
 
+The digest budget is mechanically enforced: a PreToolUse hook (`skills/release/scripts/digest-check.sh`) blocks `git commit` invocations whose bump body exceeds 150 words.
+
 The tag points at this commit, so `git log vX.Y.Z -1` shows each release's headlines at a glance; the full section stays in `CHANGELOG.md` and goes verbatim into the GitHub Release body (Step 5).
 
 ### Step 3: Tag (Local)
