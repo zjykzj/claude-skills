@@ -39,17 +39,22 @@ Update **all** version locations configured for this project. See the `### Versi
 
 The `{{PACKAGE_NAME}}` variable is defined in CLAUDE.md — `none` for projects without a Python package (bare `VERSION` file projects).
 
-**CHANGELOG rename, not rewrite**: the commit skill maintains `## [Unreleased]` on every commit, so the release does not write new entries. Rename the section header and reset it — the section content flows unchanged into the version bump commit (Step 2) and the GitHub Release body (Step 5).
+**CHANGELOG rename, not rewrite**: the commit skill maintains `## [Unreleased]` on every commit, so the release does not write new entries. Rename the section header and reset it — the section content flows unchanged into the GitHub Release body (Step 5), while the bump commit (Step 2) carries a curated digest of it.
 
 ### Step 2: Commit
 
-Use the version bump commit format — body **must** include the relevant section from `CHANGELOG.md`:
+Use the version bump commit format — the body is a **digest** of the `[X.Y.Z]` section, not a transcription of it (keep it under ~120 words):
 
 ```bash
 git commit -m "$(cat <<'EOF'
 chore: bump version to X.Y.Z
 
-<CHANGELOG.md [X.Y.Z] section content, omitting the ### headers>
+<1-2 sentence theme summary drawn from the section>
+
+Highlights:
+- <one curated bullet per line, 3-6 total>
+
+Full release notes: CHANGELOG.md
 
 Co-Authored-By: {{AI_MODEL_NAME}} <{{AI_MODEL_EMAIL}}>
 Co-Authored-By: Claude Code <noreply@anthropic.com>
@@ -57,7 +62,16 @@ EOF
 )"
 ```
 
-This ensures `git log --oneline --no-decorator` provides enough context to understand each release's contents without opening `CHANGELOG.md`.
+**Digest selection rules** (cap the Highlights list at 6 bullets; when more candidates exist, keep the most user-visible):
+
+| Include | Skip |
+|---------|------|
+| `(breaking)` entries — always | `### Fixed` minutiae |
+| New user-facing features (`### Added`) | Internal refactors and optimization details |
+| Default-behavior changes (affect existing users) | Recipe transcriptions ("records ... values") |
+| 1-2 representative performance numbers | Docs reorganization entries |
+
+The tag points at this commit, so `git log vX.Y.Z -1` shows each release's headlines at a glance; the full section stays in `CHANGELOG.md` and goes verbatim into the GitHub Release body (Step 5).
 
 ### Step 3: Tag (Local)
 

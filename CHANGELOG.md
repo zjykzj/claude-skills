@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Release bump commits carry a digest instead of the full CHANGELOG section**: the release skill writes a theme summary, 3-6 curated highlights (breaking entries, new features, default-behavior changes, key perf numbers) and a pointer to CHANGELOG.md instead of a full transcription — `git log` now shows each release's headlines, not a ~1000-word wall.
+
 ## [dataflow-3.0.0] - 2026-10-15
 
 ### Changed
