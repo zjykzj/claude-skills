@@ -1,0 +1,3 @@
+# Plugin eval artifacts — each `claude plugin eval` run writes a
+# timestamped results dir under the plugin's evals/ folder.
+plugins/**/evals/results/
