@@ -1,0 +1,68 @@
+name: plugin eval
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/**'
+      - '.github/workflows/plugin-eval.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Claude Code
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Validate plugins
+        run: claude plugin validate .
+
+  # Skipped until the ANTHROPIC_API_KEY secret exists in the repo —
+  # every eval case is a billed model call. Add the secret to activate.
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Claude Code
+        run: |
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Install sandbox dependencies
+        run: sudo apt-get update && sudo apt-get install -y bubblewrap socat
+      - name: maestro eval
+        run: |
+          claude plugin eval plugins/maestro \
+            --trust-plugin \
+            --json maestro-results.json \
+            --threshold 0.8 \
+            --model claude-sonnet-5 \
+            --judge-model claude-haiku-4-5 \
+            --no-publish \
+            --max-cost-usd 20 \
+            --allow-tools Bash Write Edit Skill
+      - name: dataflow eval
+        run: |
+          claude plugin eval plugins/dataflow \
+            --trust-plugin \
+            --json dataflow-results.json \
+            --threshold 0.8 \
+            --model claude-sonnet-5 \
+            --judge-model claude-haiku-4-5 \
+            --no-publish \
+            --max-cost-usd 20 \
+            --allow-tools Skill
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: '*results.json'
