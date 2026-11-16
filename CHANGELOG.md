@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [dataflow-3.1.0] - 2026-11-16
+
+### Changed
+
+- **`dataflow-cv` skill rebased to the 3.1.0 surface**: version gate warns below 3.1.0; skill content covers `python -m dataflow.cli`, removed dead `filter --class-file`, `--prf1 --output` PRF1Result JSON, range-validated prf1 thresholds, image errors always skipping, `do_rle=None` auto-detect, max-F1 per-class metrics; plugin version mirrors upstream 3.1.0.
+
 ## [maestro-4.4.1] - 2026-10-25
 
 ### Added
