@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`dataflow-cv` skill rebased to the 3.2.0 surface**: version gate warns below 3.2.0; skill content covers `--save-crowd` (coco2yolo / coco2labelme skip `iscrowd=1` by default) and the multi-segment polygon / multi-contour RLE merge into one union-preserving outline; plugin version mirrors upstream 3.2.0.
+
 ## [dataflow-3.1.0] - 2026-11-16
 
 ### Changed

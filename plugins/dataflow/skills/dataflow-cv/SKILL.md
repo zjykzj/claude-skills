@@ -1,12 +1,12 @@
 ---
 name: dataflow-cv
-description: Use the dataflow-cv library (v3.1.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme, visualize yolo/labelme/coco, evaluate detection/segmentation with --prf1) and Python API (label handlers, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
+description: Use the dataflow-cv library (v3.2.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme, visualize yolo/labelme/coco, evaluate detection/segmentation with --prf1) and Python API (label handlers, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
 allowed-tools: Bash, Read
 ---
 
 # DataFlow-CV Skill
 
-Reference for operating the dataflow-cv library (v3.1.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API.
+Reference for operating the dataflow-cv library (v3.2.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API.
 
 ## When to Use
 
@@ -27,8 +27,8 @@ python -c "from importlib.metadata import version; print(version('dataflow-cv'))
 | Situation | Action |
 |---|---|
 | Not installed | Offer install: `pip install dataflow-cv` (add the `[coco]` extra for pycocotools features). Answer from this document; execute nothing. |
-| `< 3.1.0` | Warn that this skill documents the 3.1.0 surface; suggest `pip install -U "dataflow-cv>=3.1.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
-| `>= 3.1.0` | Proceed. |
+| `< 3.2.0` | Warn that this skill documents the 3.2.0 surface; suggest `pip install -U "dataflow-cv>=3.2.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
+| `>= 3.2.0` | Proceed. |
 
 Extras: `[coco]` installs pycocotools — required for `evaluate` and `--do-rle`; `[dev]` = test/lint stack.
 
@@ -65,6 +65,7 @@ Six directions, source → target as named. Positional args for `yolo2coco`: `IM
 
 - `--prediction` exists **only on `yolo2coco`** — input YOLO lines carry a confidence token (6 tokens detection / even tokens segmentation); output is a plain JSON list of annotation dicts (Variant B, pycocotools `loadRes()`-compatible)
 - `--do-rle` (yolo2coco / labelme2coco) needs the `[coco]` extra
+- `--save-crowd` (coco2yolo / coco2labelme) writes `iscrowd=1` annotations as ordinary rows/shapes — the default skips them (3.2.0; previously written silently)
 - `--no-strict` skips invalid annotations instead of failing
 - COCO-source converters (`coco2yolo` / `coco2labelme`) name per-file outputs by the image `file_name` stem — leading zeros kept, subdirectories flattened with a warning, empty `file_name` falls back to the numeric id (3.0.0; previously the numeric image id, breaking)
 
@@ -146,6 +147,8 @@ The dataflow-cv repo ships test fixtures under `assets/test_data/` and runnable 
 - [*] `CocoAnnotationHandler(do_rle=None)` auto-detects output format from the source on read; explicit `True`/`False` disable auto-detection (3.1.0 — `do_rle=False` previously still auto-switched to RLE for RLE sources).
 - [*] Verbose per-class P/R/F1 come from the single max-F1 operating point (3.1.0 — previously an unreachable max-P + max-R combination).
 - [*] Analyse never raises for data issues — missing paths return an error result (3.1.0 — `image_dir` previously raised `FileNotFoundError`).
+- [!] `iscrowd=1` (crowd) annotations are **skipped by default** on `coco2yolo` / `coco2labelme`; `--save-crowd` restores writing them as ordinary rows/shapes (3.2.0, breaking default).
+- [*] Multi-segment COCO polygons (and all RLE contours) are merged into **one outline** at read time — rasterizing the output reproduces the source union; single-segment output stays bit-identical (3.2.0; previously concatenated, fabricating mask area).
 - [*] LabelMe images may be absent without warning when the JSON has valid `imageWidth`/`imageHeight`.
 - [*] YOLO prediction lines: 6 tokens detection / even tokens segmentation vs 5 / odd for labels.
 
@@ -155,4 +158,4 @@ No configuration — this skill is self-contained; nothing is appended to the pr
 
 ## Required Configuration
 
-None. Requirements: `dataflow-cv>=3.1.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
+None. Requirements: `dataflow-cv>=3.2.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
