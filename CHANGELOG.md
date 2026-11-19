@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [dataflow-3.5.0] - 2026-11-19
+
+- **`dataflow-cv` skill rebased to the 3.5.0 surface**: version gate warns below 3.5.0; skill content covers pose evaluation — `evaluate keypoints` (OKS) with the sigmas resolution chain, `--kpts-config` as the sigma source, the 10-stat keypoint protocol mapping (`ar_max_20`), and OKS-based `compute_pr_f1`; plugin version mirrors upstream 3.5.0.
+
 ## [dataflow-3.4.0] - 2026-11-19
 
 - **`dataflow-cv` skill rebased to the 3.4.0 surface**: version gate warns below 3.4.0; skill content covers pose conversion — `--pose` on all six convert subcommands (non-pose mode drops keypoints with a warning), `--kpts-config` / `--save-kpts-config` metadata propagation, pose prediction output, and the pose-mode k-consistency and v=1-degradation rules; plugin version mirrors upstream 3.4.0.

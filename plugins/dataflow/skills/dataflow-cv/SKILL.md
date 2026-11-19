@@ -1,12 +1,12 @@
 ---
 name: dataflow-cv
-description: Use the dataflow-cv library (v3.4.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme with --pose/--kpts-config/--save-kpts-config, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
+description: Use the dataflow-cv library (v3.5.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme with --pose/--kpts-config/--save-kpts-config, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation/keypoints with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
 allowed-tools: Bash, Read
 ---
 
 # DataFlow-CV Skill
 
-Reference for operating the dataflow-cv library (v3.4.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/convert/visualize in all three formats (convert since 3.4.0).
+Reference for operating the dataflow-cv library (v3.5.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/convert/visualize/evaluate in all three formats (convert since 3.4.0, evaluate since 3.5.0).
 
 ## When to Use
 
@@ -27,7 +27,7 @@ python -c "from importlib.metadata import version; print(version('dataflow-cv'))
 | Situation | Action |
 |---|---|
 | Not installed | Offer install: `pip install dataflow-cv` (add the `[coco]` extra for pycocotools features). Answer from this document; execute nothing. |
-| `< 3.4.0` | Warn that this skill documents the 3.4.0 surface; suggest `pip install -U "dataflow-cv>=3.4.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
+| `< 3.5.0` | Warn that this skill documents the 3.5.0 surface; suggest `pip install -U "dataflow-cv>=3.5.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
 | `>= 3.3.0` | Proceed. |
 
 Extras: `[coco]` installs pycocotools — required for `evaluate` and `--do-rle`; `[dev]` = test/lint stack.
@@ -79,7 +79,7 @@ Six directions, source → target as named. Positional args for `yolo2coco`: `IM
 
 ### Evaluate
 
-- `evaluate detection GT_JSON DT_JSON` — bbox IoU; `evaluate segmentation GT_JSON DT_JSON` — mask IoU
+- `evaluate detection GT_JSON DT_JSON` — bbox IoU; `evaluate segmentation GT_JSON DT_JSON` — mask IoU; `evaluate keypoints GT_JSON DT_JSON` — OKS (3.5.0), `--kpts-config` supplies per-keypoint sigmas (fallback: COCO 17-keypoint official, then uniform 0.05 + warning)
 - Two mutually exclusive paths per invocation: mAP/AR via COCOeval (default) or `--prf1` (single-threshold P/R/F1; `--prf1-iou` 0.5, `--prf1-conf` 0.0 — both must be ∈ [0, 1], `--prf1-method macro|micro`). Run twice to get both.
 - Requires `[coco]`. GT = full COCO dict. DT = COCO dict or plain list of annotation dicts; DT annotations must carry `score` and `area`
 - `-o/--output FILE` dumps JSON results — mAP path saves `EvaluationResult`; with `--prf1` saves `PRF1Result` (3.1.0+; previously silently ignored)
@@ -159,6 +159,7 @@ The dataflow-cv repo ships test fixtures under `assets/test_data/` and runnable 
 - [*] LabelMe pose convention (3.3.0): one instance = `point` shapes (keypoint-name labels) + a `rectangle` (class + bbox) sharing a `group_id`; the rectangle is required; a `point` without `group_id` is a parse error.
 - [*] Keypoint-definition YAML (3.3.0): `keypoints` global list / `classes` per-class (X-AnyLabeling compatible) + optional `skeleton`/`sigmas`; v=0 keypoints are stored at (0, 0) and COCO `num_keypoints` is recomputed on write.
 - [*] Pose conversion rules (3.4.0): pose mode enforces a dataset-wide k (first object sets it); COCO→LabelMe degrades v=1 to v=2 with a warning; `--save-kpts-config` sidecars filter out-of-range skeleton edges (the official COCO person skeleton contains index 17 for 17 keypoints).
+- [*] Keypoint evaluation (3.5.0): pycocotools yields **10** stats for `iouType='keypoints'` (no small scale, maxDets=20) — `EvaluationMetrics.ar_max_20` carries the AR and the 12-metric slots stay -1.0; `compute_pr_f1(iou_type='keypoints')` treats the IoU threshold as the OKS threshold.
 
 ## Bootstrap (First Use in a New Project)
 
@@ -166,4 +167,4 @@ No configuration — this skill is self-contained; nothing is appended to the pr
 
 ## Required Configuration
 
-None. Requirements: `dataflow-cv>=3.4.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
+None. Requirements: `dataflow-cv>=3.5.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
