@@ -1,12 +1,12 @@
 ---
 name: dataflow-cv
-description: Use the dataflow-cv library (v3.3.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
+description: Use the dataflow-cv library (v3.4.0+) — CLI commands (analyse stats/split/filter/partition/sample, convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme with --pose/--kpts-config/--save-kpts-config, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
 allowed-tools: Bash, Read
 ---
 
 # DataFlow-CV Skill
 
-Reference for operating the dataflow-cv library (v3.3.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/visualize in all three formats (3.3.0).
+Reference for operating the dataflow-cv library (v3.4.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/convert/visualize in all three formats (convert since 3.4.0).
 
 ## When to Use
 
@@ -27,7 +27,7 @@ python -c "from importlib.metadata import version; print(version('dataflow-cv'))
 | Situation | Action |
 |---|---|
 | Not installed | Offer install: `pip install dataflow-cv` (add the `[coco]` extra for pycocotools features). Answer from this document; execute nothing. |
-| `< 3.3.0` | Warn that this skill documents the 3.3.0 surface; suggest `pip install -U "dataflow-cv>=3.3.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
+| `< 3.4.0` | Warn that this skill documents the 3.4.0 surface; suggest `pip install -U "dataflow-cv>=3.4.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
 | `>= 3.3.0` | Proceed. |
 
 Extras: `[coco]` installs pycocotools — required for `evaluate` and `--do-rle`; `[dev]` = test/lint stack.
@@ -68,7 +68,7 @@ Six directions, source → target as named. Positional args for `yolo2coco`: `IM
 - `--save-crowd` (coco2yolo / coco2labelme) writes `iscrowd=1` annotations as ordinary rows/shapes — the default skips them (3.2.0; previously written silently)
 - `--no-strict` skips invalid annotations instead of failing
 - COCO-source converters (`coco2yolo` / `coco2labelme`) name per-file outputs by the image `file_name` stem — leading zeros kept, subdirectories flattened with a warning, empty `file_name` falls back to the numeric id (3.0.0; previously the numeric image id, breaking)
-- **Pose conversion not yet supported** (3.3.0): all six converters reject keypoint data with a clear error ("coming in v3.4.0") — never a silent drop
+- **Pose conversion** (3.4.0): `--pose` on all six subcommands converts keypoints; without it, keypoints are dropped with a warning per image. `--kpts-config` feeds COCO category names/skeleton + LabelMe point labels (placeholders when absent); `--save-kpts-config` (coco2yolo / coco2labelme) exports a definition-YAML sidecar. Pose mode skips objects without keypoints and drops segmentation for YOLO targets; `yolo2coco --prediction --pose` writes `keypoints` + `num_keypoints` + `score`.
 
 ### Visualize
 
@@ -158,6 +158,7 @@ The dataflow-cv repo ships test fixtures under `assets/test_data/` and runnable 
 - [!] YOLO pose mode is **explicit** (`pose=True` / `--pose`) — a 5+3k pose row can collide with segmentation token counts; k is fixed per dataset (3.3.0).
 - [*] LabelMe pose convention (3.3.0): one instance = `point` shapes (keypoint-name labels) + a `rectangle` (class + bbox) sharing a `group_id`; the rectangle is required; a `point` without `group_id` is a parse error.
 - [*] Keypoint-definition YAML (3.3.0): `keypoints` global list / `classes` per-class (X-AnyLabeling compatible) + optional `skeleton`/`sigmas`; v=0 keypoints are stored at (0, 0) and COCO `num_keypoints` is recomputed on write.
+- [*] Pose conversion rules (3.4.0): pose mode enforces a dataset-wide k (first object sets it); COCO→LabelMe degrades v=1 to v=2 with a warning; `--save-kpts-config` sidecars filter out-of-range skeleton edges (the official COCO person skeleton contains index 17 for 17 keypoints).
 
 ## Bootstrap (First Use in a New Project)
 
@@ -165,4 +166,4 @@ No configuration — this skill is self-contained; nothing is appended to the pr
 
 ## Required Configuration
 
-None. Requirements: `dataflow-cv>=3.3.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
+None. Requirements: `dataflow-cv>=3.4.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
