@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [dataflow-3.3.0] - 2026-11-19
+
+- **`dataflow-cv` skill rebased to the 3.3.0 surface**: version gate warns below 3.3.0; skill content covers pose (keypoint) support — the Label-layer `Keypoints` model with explicit YOLO `pose` mode, the LabelMe point+group_id convention with keypoint-definition YAMLs, keypoint/skeleton visualization (`--pose` / `--kpts-config`), and the converter pose guard until v3.4.0; plugin version mirrors upstream 3.3.0.
+
 ## [dataflow-3.2.0] - 2026-11-18
 
 - **`dataflow-cv` skill rebased to the 3.2.0 surface**: version gate warns below 3.2.0; skill content covers `--save-crowd` (coco2yolo / coco2labelme skip `iscrowd=1` by default) and the multi-segment polygon / multi-contour RLE merge into one union-preserving outline; plugin version mirrors upstream 3.2.0.
