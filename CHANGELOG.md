@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [dataflow-4.0.0] - 2026-11-21
+
+- **`dataflow-cv` skill rebased to the 4.0.0 surface**: version gate warns below 4.0.0; 4.0.0 is the milestone release — det/seg/pose complete across all four modules; skill content refreshed (str/Path API widening, PRF1 DT-score validation, correct IoU-type labels, LabelMe v=1 difficult-flag round-trip) and the evaluator count corrected to 3; plugin version mirrors upstream 4.0.0.
+
 ## [dataflow-3.6.0] - 2026-11-19
 
 - **`dataflow-cv` skill rebased to the 3.6.0 surface**: version gate warns below 3.6.0; skill content covers keypoint statistics — `analyse stats --kpts-config` (per-keypoint labeling rates, YOLO pose-parse gate), completing the pose roadmap documentation; plugin version mirrors upstream 3.6.0.

@@ -1,12 +1,12 @@
 ---
 name: dataflow-cv
-description: Use the dataflow-cv library (v3.6.0+) — CLI commands (analyse stats/split/filter/partition/sample (stats --kpts-config), convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme with --pose/--kpts-config/--save-kpts-config, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation/keypoints with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 2 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
+description: Use the dataflow-cv library (v4.0.0+) — CLI commands (analyse stats/split/filter/partition/sample (stats --kpts-config), convert yolo2coco/yolo2labelme/labelme2yolo/labelme2coco/coco2yolo/coco2labelme with --pose/--kpts-config/--save-kpts-config, visualize yolo/labelme/coco with --pose/--kpts-config, evaluate detection/segmentation/keypoints with --prf1) and Python API (label handlers with pose keypoints, Keypoints model, 5 analysers, 3 converters, 3 visualizers, 3 evaluators, compute_pr_f1, LogConfig/LogManager). Use when working with dataflow-cv — building dataset pipelines, converting YOLO/LabelMe/COCO annotations, evaluating detections, debugging dataflow-cv errors — and whenever the user asks anything about dataflow-cv — CLI usage, API signatures, metric computation, format conversion rules, or install extras — even if they only ask a question rather than request an action. Do not use for other CV libraries, generic OpenCV usage, or general numpy questions.
 allowed-tools: Bash, Read
 ---
 
 # DataFlow-CV Skill
 
-Reference for operating the dataflow-cv library (v3.6.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/convert/visualize/evaluate in all three formats (convert since 3.4.0, evaluate since 3.5.0).
+Reference for operating the dataflow-cv library (v4.0.0+): dataset analysis, format conversion, visualization, and evaluation across YOLO, LabelMe, and COCO annotation formats, via CLI and Python API. Pose (keypoint) support: read/write/convert/visualize/evaluate in all three formats (convert since 3.4.0, evaluate since 3.5.0).
 
 ## When to Use
 
@@ -27,8 +27,8 @@ python -c "from importlib.metadata import version; print(version('dataflow-cv'))
 | Situation | Action |
 |---|---|
 | Not installed | Offer install: `pip install dataflow-cv` (add the `[coco]` extra for pycocotools features). Answer from this document; execute nothing. |
-| `< 3.6.0` | Warn that this skill documents the 3.6.0 surface; suggest `pip install -U "dataflow-cv>=3.6.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
-| `>= 3.3.0` | Proceed. |
+| `< 4.0.0` | Warn that this skill documents the 4.0.0 surface; suggest `pip install -U "dataflow-cv>=4.0.0"`. Degraded mode: proceed, but re-verify every flag with `--help` before composing commands. |
+| `>= 4.0.0` | Proceed. |
 
 Extras: `[coco]` installs pycocotools — required for `evaluate` and `--do-rle`; `[dev]` = test/lint stack.
 
@@ -168,4 +168,4 @@ No configuration — this skill is self-contained; nothing is appended to the pr
 
 ## Required Configuration
 
-None. Requirements: `dataflow-cv>=3.6.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
+None. Requirements: `dataflow-cv>=4.0.0` (Step 0); `[coco]` extra only for `evaluate` / `--do-rle`.
