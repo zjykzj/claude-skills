@@ -20,7 +20,7 @@ claude-skills is a Claude Code plugin marketplace hosting two plugins, distribut
 
 ## Maestro Configuration
 
-{{AI_MODEL_NAME}} = DeepSeek-V4-Pro
+{{AI_MODEL_NAME}} = deepseek-v4-pro[1m]
 {{AI_MODEL_EMAIL}} = noreply@deepseek.com
 {{REPO_URL}} = https://github.com/zjykzj/claude-skills
 {{PACKAGE_NAME}} = none
